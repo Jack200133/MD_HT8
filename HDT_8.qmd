@@ -36,6 +36,7 @@ library(profvis)
 library(mlr)
 library(Metrics)
 library(nnet)
+library(neuralnet)
 ```
 
 ## 1. Dvisión de variables numéricas y obtención de data de prueba y entrenamiento
@@ -104,72 +105,222 @@ train <- datos[corte, ]
 test <- datos[-corte, ]
 train <- select(train, -SalePrice)
 test <- select(test, -SalePrice)
-colnames(train)
-colnames(test)
 ```
 
 
-## 3 4 y 5. Generar dos modelos de redes neuronales, predicciones y matrices.
+## 3. Generar dos modelos de redes neuronales, predicciones y matrices.
  
-### 3 4 5 .1 Primer modelo
+### 3.1 Primer modelo
 
 ```{r}
-modeloCaret <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 16, decay = 0.1), nnet = list(droput = 0.5), activation = "logistic")
-prediccionCaret <- predict(modeloCaret, newdata = test)
-cfmCaret <- confusionMatrix(prediccionCaret, test$clasificacion)
-cfmCaret
+Rprof(memory.profiling = TRUE)
+modelo1 <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 4, decay = 0.1), nnet = list(droput = 0.5), activation = "logistic")
+Rprof(NULL)
+pm1 <- summaryRprof(memory = "both")
 ```
 
 
-
-
-## 3 4 5 .2 Segundo modelo
+## 3.2 Segundo modelo
 
 ```{r}
-modeloCaret <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = c(16, 16), decay = 0.1), nnet = list(droput = 0.5), activation = "logistic")
-prediccionCaret <- predict(modeloCaret, newdata = test)
-cfmCaret <- confusionMatrix(prediccionCaret, test$clasificacion)
-cfmCaret
+Rprof(memory.profiling = TRUE)
+modelo2 <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 16, decay = 0.1), nnet = list(droput = 0.5), activation = "sigmoid")
+Rprof(NULL)
+pm2 <- summaryRprof(memory = "both")
 ```
+
+## 4. Predicciones
+
+### 4.1 Predicción con primer modelo
+
+```{r}
+prediccion1 <- predict(modelo1, newdata = test)
+cfm1 <- confusionMatrix(prediccion1, test$clasificacion)
+```
+
+### 4.2 Predicción con segundo modelo
+
+```{r}
+prediccion2 <- predict(modelo2, newdata = test)
+cfm2 <- confusionMatrix(prediccion2, test$clasificacion)
+```
+
+## 5. Matrices de confusión de modelos
+
+### 5.1 Matriz de primer modelo
+```{r}
+cfm1
+```
+
+
+### 5.2 Matriz de segundo modelo
+La matriz para el segundo modelo
+```{r}
+cfm2
+```
+
 
 ## 6 Comparacion de resultados
 
-### Con Random forest
-Este modelo obtuvo un accuracy de 0.761
-Este modelo obtuvo un tiempo de procesamiento de 0.70
-El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.933 indicando asi que modelo no tiene tantas equivocaciones
-
-### Decision tree
-Este modelo obtuvo un accuracy de 0.756
-Este modelo obtuvo un tiempo de procesamiento de 0.68
-El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.926 indicando asi que modelo no tiene tantas equivocaciones
-
-### Naive bayes
-Este modelo obtuvo un accuracy de 0.52
-Este modelo obtuvo un tiempo de procesamiento de 0.57
-El modelo obtuvo un sensitivity de 0.559 y un specificity de 0.954 indicando asi que modelo tiende a equivocaciones más de lo esperado
-
-### Regresion SVM
-Este modelo obtuvo un accurracy de 0.952
-Este modelo obtuvo un tiempo de procesamiento de 0.66
-El modelo obtuvo un sensitivity de 0.987 y un specificity de 0.986 indicando asi que modelo no tiene tantas equivocaciones
-
 ### Red neuronal 1
-Este modelo obtuvo un accurracy de 
-Este modelo obtuvo un tiempo de procesamiento de 
-El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones
+Este modelo obtuvo un accurracy de 0.754
+Este modelo obtuvo un tiempo de procesamiento de `r pm1$sampling.time`
+El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.
 
 
 ### Red neuronal 2
-Este modelo obtuvo un accurracy de 
-Este modelo obtuvo un tiempo de procesamiento de 
-El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones
+Este modelo obtuvo un accurracy de 0.719
+Este modelo obtuvo un tiempo de procesamiento de `r pm2$sampling.time`
+El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.
 
 
 ### Conclusion
 
-Segun los datos que se observan anteriormente se puede definir que el mejor modelo de todos es el ...
+Segun los datos que se observan anteriormente se puede definir que el mejor modelo de las dos redes neuronales es la primera, la cual tiene una solo una capa de 16 neuronas.
+
+## 7. Análisis de overfitting
+
+### 7.1 Primer modelo
+
+```{r warning=FALSE, message=FALSE}
+    # datos.task = makeClassifTask(data = train, target = "clasificacion")
+    # rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
+    # lrn = makeLearner("classif.nnet", size = 4, decay = 1e-4, maxit = 1000, trace = FALSE)
+    # lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
+    #                                 percs = seq(0.1, 1, by = 0.1),
+    #                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
+    #                                 show.info = FALSE)
+    # plotLearningCurve(lc2, facet = "learner")
+```
+
+Tras observar la curva de aprendizaje, se puede notar que la curva de training siempre va en ascenso, mientras mayor cantidad de datos mayor es la curva lo que indica que el modelo no posee un infra ajuste. Por otro lado, al observar la curva de test se nota que al final con el último grupo de datos en lugar de que la curva disminuye va en aumento lo que no debe de pasar, indicando así que el modelo posee sobreajuste. Además, se puede reforzar esta conclusión al notar que las dos curvas nunca llegan a converger y la distancia entre ellas es muy amplia.
+
+### 7.2 Segundo modelo
+
+```{r warning=FALSE, message=FALSE}
+    # datos.task = makeClassifTask(data = train, target = "clasificacion")
+    # rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
+    # lrn = makeLearner("classif.nnet", size = 16, decay = 1e-4, maxit = 1000, trace = FALSE)
+    # lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
+    #                                 percs = seq(0.1, 1, by = 0.1),
+    #                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
+    #                                 show.info = FALSE)
+    # plotLearningCurve(lc2, facet = "learner")
+```
+
+El segundo modelo se evidencia en su curva de aprendizaje que tiene overfitting. Se aprecia que la curva de entrenamiento sube cuando se tienen más datos, lo cual indica que el modelo se está ajustando mucho a ellos. Además, existe un espacio demasiado grande entre curvas. Este sobreajuste se puede deber a que la complejidad del modelo es demasiado alta para los datos que se tienen. También es posible que se tengan muy pocos datos y/o features.
 
 
+## 8. Tuneo de parametros
+
+```{r }
+grid <- expand.grid(size = c(2, 4, 6, 10),
+                    decay = c(0.01, 0.1, 0.5, 1.5, 1.25))
+
+modelo_tuneado <- caret::train(clasificacion ~ ., 
+                               data = train, 
+                               method = "nnet", 
+                               trace = F, 
+                               tuneGrid = grid, 
+                               nnet = list(droput = 0.5), 
+                               maxit = 100)
+
+modelo_tuneado$bestTune
+summary(modelo_tuneado)
+
+```
+
+```{r echo=F, message=F}
+
+# library(mlr)
+
+# set.seed(123) # Establecer una semilla para la reproducibilidad
+# train_indices <- sample(1:nrow(test), size = floor(0.5 * nrow(test)))
+# train_50 <- train[train_indices, ]
+# valid_50 <- train[-train_indices, ]
+
+# # Crear la tarea de clasificación
+# datos.task <- makeClassifTask(data = train_50, target = "clasificacion")
+
+# # Crear el descriptor de muestreo
+# resampling <- makeResampleDesc("CV", iters = 10)
+
+# # Crear el aprendiz con el algoritmo deseado
+# learner <- makeLearner("classif.nnet", predict.type = "prob")
+
+# # Definir los rangos de hiperparámetros
+# param_set <- makeParamSet(
+#   makeDiscreteParam("size", values = c(2, 4, 6, 8, 10)),
+#   makeNumericParam("decay", lower = 1e-5, upper = 1e-1, trafo = function(x) 10^x)
+# )
+
+# # Definir la estrategia de búsqueda en cuadrícula
+# control <- makeTuneControlGrid()
+
+# # Configurar la búsqueda de hiperparámetros
+# tune_params <- makeTuneWrapper(learner, resampling, measures = list(ber), par.set = param_set, control = control)
+
+# # Ejecutar la búsqueda de hiperparámetros
+# res <- resample(tune_params, datos.task, resampling, measures = list(ber), extract = getTuneResult)
+
+# # Mostrar los resultados
+# print(res)
+
+# # Obtener el mejor conjunto de hiperparámetros
+# best_params <- res$extract[[1]]$x
+# print(best_params)
+
+```
+
+Al utilizar crossvalidation con parameter tuning, se obtuvo que la mejor cantidad de neuronas es 10 y el mejor decay es 1.26 aproximadamente. No se muestra porque la ejecución del código es muy extensa. A pesar de que estos valores puede que mejoren un poco el accuracy, el overfitting es muy probable que se mantenga.
+
+### 8.2 Modelo Tuneado
+
+```{r}
+Rprof(memory.profiling = TRUE)
+modelo3 <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 10, decay = 1.258925), nnet = list(droput = 0.5), activation = "logistic")
+Rprof(NULL)
+pm3 <- summaryRprof(memory = "both")
+```
+```{r}
+prediccion3 <- predict(modelo3, newdata = test)
+cfm3 <- confusionMatrix(prediccion3, test$clasificacion)
+```
+
+```{r}
+cfm3
+```
+
+Se obtuvo un accuracy de 0.77, solo un 0.01 arriba del mejor accuracy anterior. Por lo que no se tiene una diferencia tan significativa para el modelo. Es casi seguro que el overfitting se mantuvo.
 
 
+## 9. Selección de SalePrice como variable respuesta
+
+```{r}
+porcentaje <- 0.7
+set.seed(123)
+
+corte <- sample(nrow(datos), nrow(datos) * porcentaje)
+train <- datos[corte, ]
+test <- datos[-corte, ]
+train <- train[, numeric_variables]
+test <- test[, numeric_variables]
+```
+
+## 10. Modelos de regresión lineal con redes neuronales.
+
+### 10.1 Primer modelo
+
+```{r}
+
+```
+
+### 10.2 Segundo modelo
+
+## 11. Predicción
+
+### 11.1 Predicción con primer modelo
+
+```{r}
+
+```

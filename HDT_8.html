@@ -265,136 +265,351 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[corte, ]</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> datos[<span class="sc">-</span>corte, ]</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">select</span>(train, <span class="sc">-</span>SalePrice)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">select</span>(test, <span class="sc">-</span>SalePrice)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "OverallQual"   "BsmtFinSF1"    "BsmtUnfSF"     "X2ndFlrSF"    
- [5] "PoolArea"      "MiscVal"       "Neighborhood"  "HouseStyle"   
- [9] "LotConfig"     "clasificacion"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "OverallQual"   "BsmtFinSF1"    "BsmtUnfSF"     "X2ndFlrSF"    
- [5] "PoolArea"      "MiscVal"       "Neighborhood"  "HouseStyle"   
- [9] "LotConfig"     "clasificacion"</code></pre>
-</div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">select</span>(test, <span class="sc">-</span>SalePrice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="y-5.-generar-dos-modelos-de-redes-neuronales-predicciones-y-matrices." class="level2">
-<h2 class="anchored" data-anchor-id="y-5.-generar-dos-modelos-de-redes-neuronales-predicciones-y-matrices.">3 4 y 5. Generar dos modelos de redes neuronales, predicciones y matrices.</h2>
+<section id="generar-dos-modelos-de-redes-neuronales-predicciones-y-matrices." class="level2">
+<h2 class="anchored" data-anchor-id="generar-dos-modelos-de-redes-neuronales-predicciones-y-matrices.">3. Generar dos modelos de redes neuronales, predicciones y matrices.</h2>
 <section id="primer-modelo" class="level3">
-<h3 class="anchored" data-anchor-id="primer-modelo">3 4 5 .1 Primer modelo</h3>
+<h3 class="anchored" data-anchor-id="primer-modelo">3.1 Primer modelo</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modeloCaret <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">decay =</span> <span class="fl">0.1</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"logistic"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>prediccionCaret <span class="ot">&lt;-</span> <span class="fu">predict</span>(modeloCaret, <span class="at">newdata =</span> test)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cfmCaret <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccionCaret, test<span class="sc">$</span>clasificacion)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>cfmCaret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Confusion Matrix and Statistics
-
-             Reference
-Prediction    Caras Economicas Intermedias
-  Caras         130          1          28
-  Economicas      4        115          33
-  Intermedias    18         24          86
-
-Overall Statistics
-                                          
-               Accuracy : 0.754           
-                 95% CI : (0.7109, 0.7936)
-    No Information Rate : 0.3462          
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
-                                          
-                  Kappa : 0.6309          
-                                          
- Mcnemar's Test P-Value : 0.1451          
-
-Statistics by Class:
-
-                     Class: Caras Class: Economicas Class: Intermedias
-Sensitivity                0.8553            0.8214             0.5850
-Specificity                0.8990            0.8763             0.8562
-Pos Pred Value             0.8176            0.7566             0.6719
-Neg Pred Value             0.9214            0.9129             0.8039
-Prevalence                 0.3462            0.3189             0.3349
-Detection Rate             0.2961            0.2620             0.1959
-Detection Prevalence       0.3622            0.3462             0.2916
-Balanced Accuracy          0.8771            0.8488             0.7206</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">decay =</span> <span class="fl">0.1</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"logistic"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pm1 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="segundo-modelo" class="level2">
-<h2 class="anchored" data-anchor-id="segundo-modelo">3 4 5 .2 Segundo modelo</h2>
+<h2 class="anchored" data-anchor-id="segundo-modelo">3.2 Segundo modelo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modeloCaret <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">16</span>), <span class="at">decay =</span> <span class="fl">0.1</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"logistic"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prediccionCaret <span class="ot">&lt;-</span> <span class="fu">predict</span>(modeloCaret, <span class="at">newdata =</span> test)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cfmCaret <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccionCaret, test<span class="sc">$</span>clasificacion)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>cfmCaret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">decay =</span> <span class="fl">0.1</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"sigmoid"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>pm2 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="predicciones" class="level2">
+<h2 class="anchored" data-anchor-id="predicciones">4. Predicciones</h2>
+<section id="predicción-con-primer-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="predicción-con-primer-modelo">4.1 Predicción con primer modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prediccion1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo1, <span class="at">newdata =</span> test)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cfm1 <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccion1, test<span class="sc">$</span>clasificacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="predicción-con-segundo-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="predicción-con-segundo-modelo">4.2 Predicción con segundo modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prediccion2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo2, <span class="at">newdata =</span> test)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cfm2 <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccion2, test<span class="sc">$</span>clasificacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="matrices-de-confusión-de-modelos" class="level2">
+<h2 class="anchored" data-anchor-id="matrices-de-confusión-de-modelos">5. Matrices de confusión de modelos</h2>
+<section id="matriz-de-primer-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="matriz-de-primer-modelo">5.1 Matriz de primer modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cfm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 
              Reference
 Prediction    Caras Economicas Intermedias
-  Caras         120          0          23
-  Economicas      1        112          40
-  Intermedias    31         28          84
+  Caras         129          0          22
+  Economicas      0        114          33
+  Intermedias    23         26          92
 
 Overall Statistics
                                           
-               Accuracy : 0.7198          
-                 95% CI : (0.6753, 0.7614)
+               Accuracy : 0.7631          
+                 95% CI : (0.7205, 0.8021)
     No Information Rate : 0.3462          
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
                                           
-                  Kappa : 0.5799          
+                  Kappa : 0.6446          
                                           
- Mcnemar's Test P-Value : 0.2306          
+ Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: Caras Class: Economicas Class: Intermedias
-Sensitivity                0.7895            0.8000             0.5714
-Specificity                0.9199            0.8629             0.7979
-Pos Pred Value             0.8392            0.7320             0.5874
-Neg Pred Value             0.8919            0.9021             0.7872
+Sensitivity                0.8487            0.8143             0.6259
+Specificity                0.9233            0.8896             0.8322
+Pos Pred Value             0.8543            0.7755             0.6525
+Neg Pred Value             0.9201            0.9110             0.8154
 Prevalence                 0.3462            0.3189             0.3349
-Detection Rate             0.2733            0.2551             0.1913
-Detection Prevalence       0.3257            0.3485             0.3257
-Balanced Accuracy          0.8547            0.8314             0.6847</code></pre>
+Detection Rate             0.2938            0.2597             0.2096
+Detection Prevalence       0.3440            0.3349             0.3212
+Balanced Accuracy          0.8860            0.8520             0.7290</code></pre>
 </div>
 </div>
+</section>
+<section id="matriz-de-segundo-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="matriz-de-segundo-modelo">5.2 Matriz de segundo modelo</h3>
+<p>La matriz para el segundo modelo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cfm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+             Reference
+Prediction    Caras Economicas Intermedias
+  Caras         133          3          23
+  Economicas      0        105          32
+  Intermedias    19         32          92
+
+Overall Statistics
+                                          
+               Accuracy : 0.7517          
+                 95% CI : (0.7085, 0.7914)
+    No Information Rate : 0.3462          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.6272          
+                                          
+ Mcnemar's Test P-Value : 0.3365          
+
+Statistics by Class:
+
+                     Class: Caras Class: Economicas Class: Intermedias
+Sensitivity                0.8750            0.7500             0.6259
+Specificity                0.9094            0.8930             0.8253
+Pos Pred Value             0.8365            0.7664             0.6434
+Neg Pred Value             0.9321            0.8841             0.8142
+Prevalence                 0.3462            0.3189             0.3349
+Detection Rate             0.3030            0.2392             0.2096
+Detection Prevalence       0.3622            0.3121             0.3257
+Balanced Accuracy          0.8922            0.8215             0.7256</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="comparacion-de-resultados" class="level2">
 <h2 class="anchored" data-anchor-id="comparacion-de-resultados">6 Comparacion de resultados</h2>
-<section id="con-random-forest" class="level3">
-<h3 class="anchored" data-anchor-id="con-random-forest">Con Random forest</h3>
-<p>Este modelo obtuvo un accuracy de 0.761 Este modelo obtuvo un tiempo de procesamiento de 0.70 El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.933 indicando asi que modelo no tiene tantas equivocaciones</p>
-</section>
-<section id="decision-tree" class="level3">
-<h3 class="anchored" data-anchor-id="decision-tree">Decision tree</h3>
-<p>Este modelo obtuvo un accuracy de 0.756 Este modelo obtuvo un tiempo de procesamiento de 0.68 El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.926 indicando asi que modelo no tiene tantas equivocaciones</p>
-</section>
-<section id="naive-bayes" class="level3">
-<h3 class="anchored" data-anchor-id="naive-bayes">Naive bayes</h3>
-<p>Este modelo obtuvo un accuracy de 0.52 Este modelo obtuvo un tiempo de procesamiento de 0.57 El modelo obtuvo un sensitivity de 0.559 y un specificity de 0.954 indicando asi que modelo tiende a equivocaciones más de lo esperado</p>
-</section>
-<section id="regresion-svm" class="level3">
-<h3 class="anchored" data-anchor-id="regresion-svm">Regresion SVM</h3>
-<p>Este modelo obtuvo un accurracy de 0.952 Este modelo obtuvo un tiempo de procesamiento de 0.66 El modelo obtuvo un sensitivity de 0.987 y un specificity de 0.986 indicando asi que modelo no tiene tantas equivocaciones</p>
-</section>
 <section id="red-neuronal-1" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-1">Red neuronal 1</h3>
-<p>Este modelo obtuvo un accurracy de Este modelo obtuvo un tiempo de procesamiento de El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones</p>
+<p>Este modelo obtuvo un accurracy de 0.754 Este modelo obtuvo un tiempo de procesamiento de 3.38 El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="red-neuronal-2" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-2">Red neuronal 2</h3>
-<p>Este modelo obtuvo un accurracy de Este modelo obtuvo un tiempo de procesamiento de El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones</p>
+<p>Este modelo obtuvo un accurracy de 0.719 Este modelo obtuvo un tiempo de procesamiento de 12.98 El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>Segun los datos que se observan anteriormente se puede definir que el mejor modelo de todos es el …</p>
+<p>Segun los datos que se observan anteriormente se puede definir que el mejor modelo de las dos redes neuronales es la primera, la cual tiene una solo una capa de 16 neuronas.</p>
+</section>
+</section>
+<section id="análisis-de-overfitting" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-overfitting">7. Análisis de overfitting</h2>
+<section id="primer-modelo-1" class="level3">
+<h3 class="anchored" data-anchor-id="primer-modelo-1">7.1 Primer modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># datos.task = makeClassifTask(data = train, target = "clasificacion")</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lrn = makeLearner("classif.nnet", size = 4, decay = 1e-4, maxit = 1000, trace = FALSE)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lc2 = generateLearningCurveData(learners = lrn, task = datos.task,</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 percs = seq(0.1, 1, by = 0.1),</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 show.info = FALSE)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plotLearningCurve(lc2, facet = "learner")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Tras observar la curva de aprendizaje, se puede notar que la curva de training siempre va en ascenso, mientras mayor cantidad de datos mayor es la curva lo que indica que el modelo no posee un infra ajuste. Por otro lado, al observar la curva de test se nota que al final con el último grupo de datos en lugar de que la curva disminuye va en aumento lo que no debe de pasar, indicando así que el modelo posee sobreajuste. Además, se puede reforzar esta conclusión al notar que las dos curvas nunca llegan a converger y la distancia entre ellas es muy amplia.</p>
+</section>
+<section id="segundo-modelo-1" class="level3">
+<h3 class="anchored" data-anchor-id="segundo-modelo-1">7.2 Segundo modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># datos.task = makeClassifTask(data = train, target = "clasificacion")</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lrn = makeLearner("classif.nnet", size = 16, decay = 1e-4, maxit = 1000, trace = FALSE)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lc2 = generateLearningCurveData(learners = lrn, task = datos.task,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 percs = seq(0.1, 1, by = 0.1),</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                 show.info = FALSE)</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plotLearningCurve(lc2, facet = "learner")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>El segundo modelo se evidencia en su curva de aprendizaje que tiene overfitting. Se aprecia que la curva de entrenamiento sube cuando se tienen más datos, lo cual indica que el modelo se está ajustando mucho a ellos. Además, existe un espacio demasiado grande entre curvas. Este sobreajuste se puede deber a que la complejidad del modelo es demasiado alta para los datos que se tienen. También es posible que se tengan muy pocos datos y/o features.</p>
+</section>
+</section>
+<section id="tuneo-de-parametros" class="level2">
+<h2 class="anchored" data-anchor-id="tuneo-de-parametros">8. Tuneo de parametros</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">10</span>),</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">decay =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1.25</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>modelo_tuneado <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> train, </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="st">"nnet"</span>, </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">trace =</span> F, </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">tuneGrid =</span> grid, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">maxit =</span> <span class="dv">100</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>modelo_tuneado<span class="sc">$</span>bestTune</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   size decay
+15    6   1.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_tuneado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a 41-6-3 network with 273 weights
+options were - softmax modelling  decay=1.5
+  b-&gt;h1  i1-&gt;h1  i2-&gt;h1  i3-&gt;h1  i4-&gt;h1  i5-&gt;h1  i6-&gt;h1  i7-&gt;h1  i8-&gt;h1  i9-&gt;h1 
+  -0.18   -0.73   -0.53   -0.26   -0.39   -0.02   -0.10    0.13    0.55    0.30 
+i10-&gt;h1 i11-&gt;h1 i12-&gt;h1 i13-&gt;h1 i14-&gt;h1 i15-&gt;h1 i16-&gt;h1 i17-&gt;h1 i18-&gt;h1 i19-&gt;h1 
+  -0.40   -0.07   -0.41    0.34   -0.52    0.25    0.33    0.06   -0.06   -0.02 
+i20-&gt;h1 i21-&gt;h1 i22-&gt;h1 i23-&gt;h1 i24-&gt;h1 i25-&gt;h1 i26-&gt;h1 i27-&gt;h1 i28-&gt;h1 i29-&gt;h1 
+  -0.09   -0.12   -0.22    0.69    0.02   -0.20   -0.32   -0.02    0.15   -0.17 
+i30-&gt;h1 i31-&gt;h1 i32-&gt;h1 i33-&gt;h1 i34-&gt;h1 i35-&gt;h1 i36-&gt;h1 i37-&gt;h1 i38-&gt;h1 i39-&gt;h1 
+  -0.17    0.26   -0.42    0.03    0.12   -0.11    0.00   -0.67   -0.24    0.04 
+i40-&gt;h1 i41-&gt;h1 
+   0.00    0.02 
+  b-&gt;h2  i1-&gt;h2  i2-&gt;h2  i3-&gt;h2  i4-&gt;h2  i5-&gt;h2  i6-&gt;h2  i7-&gt;h2  i8-&gt;h2  i9-&gt;h2 
+   0.21    0.76    0.56    0.24    0.38    0.01    0.11   -0.14   -0.58   -0.33 
+i10-&gt;h2 i11-&gt;h2 i12-&gt;h2 i13-&gt;h2 i14-&gt;h2 i15-&gt;h2 i16-&gt;h2 i17-&gt;h2 i18-&gt;h2 i19-&gt;h2 
+   0.40    0.06    0.41   -0.35    0.56   -0.26   -0.35   -0.06    0.07    0.01 
+i20-&gt;h2 i21-&gt;h2 i22-&gt;h2 i23-&gt;h2 i24-&gt;h2 i25-&gt;h2 i26-&gt;h2 i27-&gt;h2 i28-&gt;h2 i29-&gt;h2 
+   0.11    0.11    0.23   -0.69    0.03    0.21    0.34    0.02   -0.15    0.18 
+i30-&gt;h2 i31-&gt;h2 i32-&gt;h2 i33-&gt;h2 i34-&gt;h2 i35-&gt;h2 i36-&gt;h2 i37-&gt;h2 i38-&gt;h2 i39-&gt;h2 
+   0.17   -0.27    0.45   -0.05   -0.12    0.13    0.01    0.72    0.24   -0.04 
+i40-&gt;h2 i41-&gt;h2 
+   0.00   -0.01 
+  b-&gt;h3  i1-&gt;h3  i2-&gt;h3  i3-&gt;h3  i4-&gt;h3  i5-&gt;h3  i6-&gt;h3  i7-&gt;h3  i8-&gt;h3  i9-&gt;h3 
+  -0.16   -0.78   -0.59   -0.31   -0.42   -0.06   -0.15    0.12    0.47    0.22 
+i10-&gt;h3 i11-&gt;h3 i12-&gt;h3 i13-&gt;h3 i14-&gt;h3 i15-&gt;h3 i16-&gt;h3 i17-&gt;h3 i18-&gt;h3 i19-&gt;h3 
+  -0.42   -0.09   -0.41    0.32   -0.41    0.24    0.28    0.06   -0.02   -0.05 
+i20-&gt;h3 i21-&gt;h3 i22-&gt;h3 i23-&gt;h3 i24-&gt;h3 i25-&gt;h3 i26-&gt;h3 i27-&gt;h3 i28-&gt;h3 i29-&gt;h3 
+  -0.05   -0.14   -0.23    0.69    0.15   -0.16   -0.30   -0.02    0.16   -0.15 
+i30-&gt;h3 i31-&gt;h3 i32-&gt;h3 i33-&gt;h3 i34-&gt;h3 i35-&gt;h3 i36-&gt;h3 i37-&gt;h3 i38-&gt;h3 i39-&gt;h3 
+  -0.20    0.23   -0.43    0.00    0.10   -0.07    0.00   -0.54   -0.22    0.04 
+i40-&gt;h3 i41-&gt;h3 
+   0.01    0.02 
+  b-&gt;h4  i1-&gt;h4  i2-&gt;h4  i3-&gt;h4  i4-&gt;h4  i5-&gt;h4  i6-&gt;h4  i7-&gt;h4  i8-&gt;h4  i9-&gt;h4 
+   0.12    0.72    0.54    0.31    0.41    0.05    0.11   -0.12   -0.46   -0.21 
+i10-&gt;h4 i11-&gt;h4 i12-&gt;h4 i13-&gt;h4 i14-&gt;h4 i15-&gt;h4 i16-&gt;h4 i17-&gt;h4 i18-&gt;h4 i19-&gt;h4 
+   0.42    0.11    0.41   -0.34    0.41   -0.24   -0.27   -0.06    0.00    0.05 
+i20-&gt;h4 i21-&gt;h4 i22-&gt;h4 i23-&gt;h4 i24-&gt;h4 i25-&gt;h4 i26-&gt;h4 i27-&gt;h4 i28-&gt;h4 i29-&gt;h4 
+   0.05    0.14    0.21   -0.72   -0.15    0.16    0.29    0.02   -0.16    0.14 
+i30-&gt;h4 i31-&gt;h4 i32-&gt;h4 i33-&gt;h4 i34-&gt;h4 i35-&gt;h4 i36-&gt;h4 i37-&gt;h4 i38-&gt;h4 i39-&gt;h4 
+   0.20   -0.22    0.41    0.00   -0.10    0.05   -0.01    0.54    0.23   -0.03 
+i40-&gt;h4 i41-&gt;h4 
+  -0.01   -0.07 
+  b-&gt;h5  i1-&gt;h5  i2-&gt;h5  i3-&gt;h5  i4-&gt;h5  i5-&gt;h5  i6-&gt;h5  i7-&gt;h5  i8-&gt;h5  i9-&gt;h5 
+  -0.37    0.91    0.91    0.63    0.82    0.16   -0.04    0.00    0.01    0.34 
+i10-&gt;h5 i11-&gt;h5 i12-&gt;h5 i13-&gt;h5 i14-&gt;h5 i15-&gt;h5 i16-&gt;h5 i17-&gt;h5 i18-&gt;h5 i19-&gt;h5 
+   0.30    0.40    0.29   -0.26   -0.35   -0.20    0.01   -0.15   -0.45    0.25 
+i20-&gt;h5 i21-&gt;h5 i22-&gt;h5 i23-&gt;h5 i24-&gt;h5 i25-&gt;h5 i26-&gt;h5 i27-&gt;h5 i28-&gt;h5 i29-&gt;h5 
+  -0.18    0.24    0.10   -0.75   -0.35   -0.04    0.10   -0.10   -0.24    0.06 
+i30-&gt;h5 i31-&gt;h5 i32-&gt;h5 i33-&gt;h5 i34-&gt;h5 i35-&gt;h5 i36-&gt;h5 i37-&gt;h5 i38-&gt;h5 i39-&gt;h5 
+   0.14    0.00    0.26    0.19    0.00   -0.33   -0.05   -0.26    0.40   -0.33 
+i40-&gt;h5 i41-&gt;h5 
+  -0.08   -0.22 
+  b-&gt;h6  i1-&gt;h6  i2-&gt;h6  i3-&gt;h6  i4-&gt;h6  i5-&gt;h6  i6-&gt;h6  i7-&gt;h6  i8-&gt;h6  i9-&gt;h6 
+   0.47   -0.92   -1.05   -0.77   -0.91   -0.16    0.03   -0.01   -0.04   -0.40 
+i10-&gt;h6 i11-&gt;h6 i12-&gt;h6 i13-&gt;h6 i14-&gt;h6 i15-&gt;h6 i16-&gt;h6 i17-&gt;h6 i18-&gt;h6 i19-&gt;h6 
+  -0.29   -0.44   -0.25    0.25    0.39    0.21   -0.02    0.16    0.51   -0.27 
+i20-&gt;h6 i21-&gt;h6 i22-&gt;h6 i23-&gt;h6 i24-&gt;h6 i25-&gt;h6 i26-&gt;h6 i27-&gt;h6 i28-&gt;h6 i29-&gt;h6 
+   0.19   -0.24   -0.11    0.79    0.34    0.06   -0.11    0.17    0.26   -0.07 
+i30-&gt;h6 i31-&gt;h6 i32-&gt;h6 i33-&gt;h6 i34-&gt;h6 i35-&gt;h6 i36-&gt;h6 i37-&gt;h6 i38-&gt;h6 i39-&gt;h6 
+  -0.10   -0.02   -0.22   -0.21   -0.01    0.38    0.05    0.32   -0.44    0.38 
+i40-&gt;h6 i41-&gt;h6 
+   0.10    0.24 
+ b-&gt;o1 h1-&gt;o1 h2-&gt;o1 h3-&gt;o1 h4-&gt;o1 h5-&gt;o1 h6-&gt;o1 
+  0.00  -1.00   0.97  -1.16   1.16   2.04  -2.21 
+ b-&gt;o2 h1-&gt;o2 h2-&gt;o2 h3-&gt;o2 h4-&gt;o2 h5-&gt;o2 h6-&gt;o2 
+ -0.01   1.79  -1.87   1.71  -1.68  -0.87   0.82 
+ b-&gt;o3 h1-&gt;o3 h2-&gt;o3 h3-&gt;o3 h4-&gt;o3 h5-&gt;o3 h6-&gt;o3 
+  0.01  -0.79   0.90  -0.55   0.53  -1.17   1.40 </code></pre>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p>Al utilizar crossvalidation con parameter tuning, se obtuvo que la mejor cantidad de neuronas es 10 y el mejor decay es 1.26 aproximadamente. No se muestra porque la ejecución del código es muy extensa. A pesar de que estos valores puede que mejoren un poco el accuracy, el overfitting es muy probable que se mantenga.</p>
+<section id="modelo-tuneado" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-tuneado">8.2 Modelo Tuneado</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>modelo3 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">decay =</span> <span class="fl">1.258925</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"logistic"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>pm3 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>prediccion3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo3, <span class="at">newdata =</span> test)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cfm3 <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccion3, test<span class="sc">$</span>clasificacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cfm3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+             Reference
+Prediction    Caras Economicas Intermedias
+  Caras         130          0          17
+  Economicas      0        111          30
+  Intermedias    22         29         100
+
+Overall Statistics
+                                          
+               Accuracy : 0.7768          
+                 95% CI : (0.7349, 0.8149)
+    No Information Rate : 0.3462          
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.665           
+                                          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: Caras Class: Economicas Class: Intermedias
+Sensitivity                0.8553            0.7929             0.6803
+Specificity                0.9408            0.8997             0.8253
+Pos Pred Value             0.8844            0.7872             0.6623
+Neg Pred Value             0.9247            0.9027             0.8368
+Prevalence                 0.3462            0.3189             0.3349
+Detection Rate             0.2961            0.2528             0.2278
+Detection Prevalence       0.3349            0.3212             0.3440
+Balanced Accuracy          0.8980            0.8463             0.7528</code></pre>
+</div>
+</div>
+<p>Se obtuvo un accuracy de 0.77, solo un 0.01 arriba del mejor accuracy anterior. Por lo que no se tiene una diferencia tan significativa para el modelo. Es casi seguro que el overfitting se mantuvo.</p>
+</section>
+</section>
+<section id="selección-de-saleprice-como-variable-respuesta" class="level2">
+<h2 class="anchored" data-anchor-id="selección-de-saleprice-como-variable-respuesta">9. Selección de SalePrice como variable respuesta</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>porcentaje <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>corte <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(datos), <span class="fu">nrow</span>(datos) <span class="sc">*</span> porcentaje)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[corte, ]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> datos[<span class="sc">-</span>corte, ]</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> train[, numeric_variables]</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test[, numeric_variables]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modelos-de-regresión-lineal-con-redes-neuronales." class="level2">
+<h2 class="anchored" data-anchor-id="modelos-de-regresión-lineal-con-redes-neuronales.">10. Modelos de regresión lineal con redes neuronales.</h2>
+<section id="primer-modelo-2" class="level3">
+<h3 class="anchored" data-anchor-id="primer-modelo-2">10.1 Primer modelo</h3>
+<div class="cell">
+
+</div>
+</section>
+<section id="segundo-modelo-2" class="level3">
+<h3 class="anchored" data-anchor-id="segundo-modelo-2">10.2 Segundo modelo</h3>
+</section>
+</section>
+<section id="predicción" class="level2">
+<h2 class="anchored" data-anchor-id="predicción">11. Predicción</h2>
+<section id="predicción-con-primer-modelo-1" class="level3">
+<h3 class="anchored" data-anchor-id="predicción-con-primer-modelo-1">11.1 Predicción con primer modelo</h3>
+<div class="cell">
+
+</div>
 </section>
 </section>
 
