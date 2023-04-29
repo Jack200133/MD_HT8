@@ -1,0 +1,175 @@
+---
+title: "MD_HDT8"
+---
+
+```{r}
+set.seed(123)
+datos <- read.csv("train.csv")
+```
+
+```{r echo=F, include=F, load_libraries}
+library(dplyr)
+library(hopkins)
+library(factoextra)
+library(ggrepel)
+library(cluster)
+library(flexclust)
+library(FeatureImpCluster)
+library(stringr)
+library(tidyr)
+library(stats)
+library(graphics)
+library(NbClust)
+library(mclust)
+library(GGally)
+library(corrplot)
+library(caret)
+library(ggplot2)
+library(kableExtra)
+library(e1071)
+library(rpart)
+library(rpart.plot)
+library(naivebayes)
+library(randomForest)
+library(dummy)
+library(profvis)
+library(mlr)
+library(Metrics)
+library(nnet)
+```
+
+## 1. Dvisión de variables numéricas y obtención de data de prueba y entrenamiento
+
+### 1.1 Transformación y división de variables
+
+Al observar las variables se puede evidenciar que hay diferentes variables que tienen datos en diferentes escalas. Además, del análisis exploratorio previo se sabe que las variables no siguen distribuciones normales, así que se escalaron y normalizaron las variables.
+
+```{r echo=FALSE}
+head(datos, )
+
+multi_variables <- c("SalePrice", "OverallQual", "MasVnrArea", "BsmtFinSF1", "GrLivArea", "Fireplaces", "WoodDeckSF", "OpenPorchSF", "TotalBsmtSF")
+
+num2 <- datos[, multi_variables]
+datos1 <- datos[complete.cases(num2), ]
+datos1 <- mutate_if(datos1, is.numeric, scale)
+datos1 <- datos1[, multi_variables]
+
+
+variables_m2 <- c("OverallQual", "BsmtFinSF1", "BsmtUnfSF", "X2ndFlrSF", "PoolArea", "MiscVal", "Neighborhood", "HouseStyle", "LotConfig", "SalePrice")
+
+numeric_variables <- c("OverallQual", "BsmtFinSF1", "BsmtUnfSF", "X2ndFlrSF", "PoolArea", "MiscVal", "SalePrice")
+
+datos <- datos[, variables_m2]
+cualitativas <- datos[, !(names(datos) %in% numeric_variables)]
+cualitativas <- cualitativas[, !(names(cualitativas) %in% c("Id"))]
+
+datos <- datos %>% mutate_at(colnames(cualitativas), function(x) as.factor(x))
+
+numericas <- datos[, numeric_variables]
+datos <- datos[complete.cases(numericas), ]
+numericas <- na.omit(numericas)
+numericas_norm <- mutate_if(numericas, is.numeric, scale)
+numericas_norm <- scale(numericas_norm)
+datos <- data.frame(numericas_norm, datos[, -match(numeric_variables, names(datos))])
+```
+
+
+### 1.2. Creación de clasificación de la variable de precios
+```{r}
+p33 <- quantile(datos$SalePrice, 0.33)
+p66 <- quantile(datos$SalePrice, 0.66)
+
+datos <- datos %>%
+    mutate(clasificacion = ifelse(datos$SalePrice < p33, "Economicas",
+        ifelse(datos$SalePrice < p66, "Intermedias",
+            "Caras"
+        )
+    ))
+datos$clasificacion <- as.factor(datos$clasificacion)
+```
+
+
+### 2. Uso de train y test previos
+
+```{r}
+head(datos)
+```
+
+```{r}
+porcentaje <- 0.7
+set.seed(123)
+
+corte <- sample(nrow(datos), nrow(datos) * porcentaje)
+train <- datos[corte, ]
+test <- datos[-corte, ]
+train <- select(train, -SalePrice)
+test <- select(test, -SalePrice)
+colnames(train)
+colnames(test)
+```
+
+
+## 3 4 y 5. Generar dos modelos de redes neuronales, predicciones y matrices.
+ 
+### 3 4 5 .1 Primer modelo
+
+```{r}
+modeloCaret <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 16, decay = 0.1), nnet = list(droput = 0.5), activation = "logistic")
+prediccionCaret <- predict(modeloCaret, newdata = test)
+cfmCaret <- confusionMatrix(prediccionCaret, test$clasificacion)
+cfmCaret
+```
+
+
+
+
+## 3 4 5 .2 Segundo modelo
+
+```{r}
+modeloCaret <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = c(16, 16), decay = 0.1), nnet = list(droput = 0.5), activation = "logistic")
+prediccionCaret <- predict(modeloCaret, newdata = test)
+cfmCaret <- confusionMatrix(prediccionCaret, test$clasificacion)
+cfmCaret
+```
+
+## 6 Comparacion de resultados
+
+### Con Random forest
+Este modelo obtuvo un accuracy de 0.761
+Este modelo obtuvo un tiempo de procesamiento de 0.70
+El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.933 indicando asi que modelo no tiene tantas equivocaciones
+
+### Decision tree
+Este modelo obtuvo un accuracy de 0.756
+Este modelo obtuvo un tiempo de procesamiento de 0.68
+El modelo obtuvo un sensitivity de 0.809 y un specificity de 0.926 indicando asi que modelo no tiene tantas equivocaciones
+
+### Naive bayes
+Este modelo obtuvo un accuracy de 0.52
+Este modelo obtuvo un tiempo de procesamiento de 0.57
+El modelo obtuvo un sensitivity de 0.559 y un specificity de 0.954 indicando asi que modelo tiende a equivocaciones más de lo esperado
+
+### Regresion SVM
+Este modelo obtuvo un accurracy de 0.952
+Este modelo obtuvo un tiempo de procesamiento de 0.66
+El modelo obtuvo un sensitivity de 0.987 y un specificity de 0.986 indicando asi que modelo no tiene tantas equivocaciones
+
+### Red neuronal 1
+Este modelo obtuvo un accurracy de 
+Este modelo obtuvo un tiempo de procesamiento de 
+El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones
+
+
+### Red neuronal 2
+Este modelo obtuvo un accurracy de 
+Este modelo obtuvo un tiempo de procesamiento de 
+El modelo obtuvo un sensitivity de 0. y un specificity de 0. indicando asi que modelo no tiene tantas equivocaciones
+
+
+### Conclusion
+
+Segun los datos que se observan anteriormente se puede definir que el mejor modelo de todos es el ...
+
+
+
+
