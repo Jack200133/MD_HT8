@@ -241,20 +241,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  OverallQual  BsmtFinSF1   BsmtUnfSF  X2ndFlrSF    PoolArea     MiscVal
-1  0.65125610  0.57522774 -0.94426706  1.1614536 -0.06866822 -0.08765778
-2 -0.07181151  1.17159068 -0.64100836 -0.7948909 -0.06866822 -0.08765778
-3  0.65125610  0.09287536 -0.30153966  1.1889432 -0.06866822 -0.08765778
-4  0.65125610 -0.49910256 -0.06164845  0.9369551 -0.06866822 -0.08765778
-5  1.37432370  0.46340969 -0.17480468  1.6173231 -0.06866822 -0.08765778
-6 -0.79487911  0.63223302 -1.13889578  0.5017028 -0.06866822  1.32328259
-     SalePrice Neighborhood HouseStyle LotConfig clasificacion
-1  0.347154270      CollgCr     2Story    Inside         Caras
-2  0.007285824      Veenker     1Story       FR2   Intermedias
-3  0.535970074      CollgCr     2Story    Inside         Caras
-4 -0.515104565      Crawfor     2Story    Corner   Intermedias
-5  0.869544659      NoRidge     2Story       FR2         Caras
-6 -0.477341404      Mitchel     1.5Fin    Inside   Intermedias</code></pre>
+<pre><code>    SalePrice OverallQual MasVnrArea  BsmtFinSF1  GrLivArea Fireplaces
+1  0.35170267  0.65665106  0.5098397  0.57982575  0.3727132 -0.9515670
+2  0.01116139 -0.06731047 -0.5726373  1.17715497 -0.4796010  0.6026234
+3  0.54089227  0.65665106  0.3220631  0.09669182  0.5173022  0.6026234
+4 -0.51226318  0.65665106 -0.5726373 -0.49624527  0.3860306  0.6026234
+5  0.87512723  1.38061260  1.3603573  0.46782652  1.3011269  0.6026234
+6 -0.47442526 -0.79127201 -0.5726373  0.63692339 -0.2893523 -0.9515670
+  WoodDeckSF OpenPorchSF TotalBsmtSF clasificacion
+1 -0.7529618   0.2211932  -0.4561479         Caras
+2  1.6235530  -0.7023689   0.4705408   Intermedias
+3 -0.7529618  -0.0664737  -0.3100689         Caras
+4 -0.7529618  -0.1724562  -0.6843964   Intermedias
+5  0.7782156   0.5694215   0.2034901         Caras
+6 -0.4339665  -0.2481580  -0.5930970   Intermedias</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -318,32 +318,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
              Reference
 Prediction    Caras Economicas Intermedias
-  Caras         129          0          22
-  Economicas      0        114          33
-  Intermedias    23         26          92
+  Caras         126          4          16
+  Economicas      0        121          25
+  Intermedias    17         27         100
 
 Overall Statistics
                                           
-               Accuracy : 0.7631          
-                 95% CI : (0.7205, 0.8021)
-    No Information Rate : 0.3462          
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+               Accuracy : 0.7959          
+                 95% CI : (0.7549, 0.8327)
+    No Information Rate : 0.3486          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
                                           
-                  Kappa : 0.6446          
+                  Kappa : 0.6938          
                                           
- Mcnemar's Test P-Value : NA              
+ Mcnemar's Test P-Value : 0.2501          
 
 Statistics by Class:
 
                      Class: Caras Class: Economicas Class: Intermedias
-Sensitivity                0.8487            0.8143             0.6259
-Specificity                0.9233            0.8896             0.8322
-Pos Pred Value             0.8543            0.7755             0.6525
-Neg Pred Value             0.9201            0.9110             0.8154
-Prevalence                 0.3462            0.3189             0.3349
-Detection Rate             0.2938            0.2597             0.2096
-Detection Prevalence       0.3440            0.3349             0.3212
-Balanced Accuracy          0.8860            0.8520             0.7290</code></pre>
+Sensitivity                0.8811            0.7961             0.7092
+Specificity                0.9317            0.9120             0.8508
+Pos Pred Value             0.8630            0.8288             0.6944
+Neg Pred Value             0.9414            0.8931             0.8596
+Prevalence                 0.3280            0.3486             0.3234
+Detection Rate             0.2890            0.2775             0.2294
+Detection Prevalence       0.3349            0.3349             0.3303
+Balanced Accuracy          0.9064            0.8540             0.7800</code></pre>
 </div>
 </div>
 </section>
@@ -357,32 +357,32 @@ Balanced Accuracy          0.8860            0.8520             0.7290</code></p
 
              Reference
 Prediction    Caras Economicas Intermedias
-  Caras         133          3          23
-  Economicas      0        105          32
-  Intermedias    19         32          92
+  Caras         121          3          21
+  Economicas      1        126          20
+  Intermedias    21         23         100
 
 Overall Statistics
                                           
-               Accuracy : 0.7517          
-                 95% CI : (0.7085, 0.7914)
-    No Information Rate : 0.3462          
+               Accuracy : 0.7959          
+                 95% CI : (0.7549, 0.8327)
+    No Information Rate : 0.3486          
     P-Value [Acc &gt; NIR] : &lt;2e-16          
                                           
-                  Kappa : 0.6272          
+                  Kappa : 0.6938          
                                           
- Mcnemar's Test P-Value : 0.3365          
+ Mcnemar's Test P-Value : 0.7508          
 
 Statistics by Class:
 
                      Class: Caras Class: Economicas Class: Intermedias
-Sensitivity                0.8750            0.7500             0.6259
-Specificity                0.9094            0.8930             0.8253
-Pos Pred Value             0.8365            0.7664             0.6434
-Neg Pred Value             0.9321            0.8841             0.8142
-Prevalence                 0.3462            0.3189             0.3349
-Detection Rate             0.3030            0.2392             0.2096
-Detection Prevalence       0.3622            0.3121             0.3257
-Balanced Accuracy          0.8922            0.8215             0.7256</code></pre>
+Sensitivity                0.8462            0.8289             0.7092
+Specificity                0.9181            0.9261             0.8508
+Pos Pred Value             0.8345            0.8571             0.6944
+Neg Pred Value             0.9244            0.9100             0.8596
+Prevalence                 0.3280            0.3486             0.3234
+Detection Rate             0.2775            0.2890             0.2294
+Detection Prevalence       0.3326            0.3372             0.3303
+Balanced Accuracy          0.8821            0.8775             0.7800</code></pre>
 </div>
 </div>
 </section>
@@ -391,11 +391,11 @@ Balanced Accuracy          0.8922            0.8215             0.7256</code></p
 <h2 class="anchored" data-anchor-id="comparacion-de-resultados">6 Comparacion de resultados</h2>
 <section id="red-neuronal-1" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-1">Red neuronal 1</h3>
-<p>Este modelo obtuvo un accurracy de 0.754 Este modelo obtuvo un tiempo de procesamiento de 3.38 El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.</p>
+<p>Este modelo obtuvo un accurracy de 0.754 Este modelo obtuvo un tiempo de procesamiento de 1.64 El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="red-neuronal-2" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-2">Red neuronal 2</h3>
-<p>Este modelo obtuvo un accurracy de 0.719 Este modelo obtuvo un tiempo de procesamiento de 12.98 El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.</p>
+<p>Este modelo obtuvo un accurracy de 0.719 Este modelo obtuvo un tiempo de procesamiento de 5.46 El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
@@ -436,93 +436,19 @@ Balanced Accuracy          0.8922            0.8215             0.7256</code></p
 <section id="tuneo-de-parametros" class="level2">
 <h2 class="anchored" data-anchor-id="tuneo-de-parametros">8. Tuneo de parametros</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">10</span>),</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">decay =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1.25</span>))</span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grid &lt;- expand.grid(size = c(2, 4, 6, 10),</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                     decay = c(0.01, 0.1, 0.5, 1.5, 1.25))</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>modelo_tuneado <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> train, </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">method =</span> <span class="st">"nnet"</span>, </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">trace =</span> F, </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">tuneGrid =</span> grid, </span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">maxit =</span> <span class="dv">100</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># modelo_tuneado &lt;- caret::train(clasificacion ~ ., </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                                data = train, </span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                                method = "nnet", </span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                                trace = F, </span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                                tuneGrid = grid, </span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                                nnet = list(droput = 0.5), </span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                                maxit = 100)</span></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>modelo_tuneado<span class="sc">$</span>bestTune</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   size decay
-15    6   1.5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_tuneado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>a 41-6-3 network with 273 weights
-options were - softmax modelling  decay=1.5
-  b-&gt;h1  i1-&gt;h1  i2-&gt;h1  i3-&gt;h1  i4-&gt;h1  i5-&gt;h1  i6-&gt;h1  i7-&gt;h1  i8-&gt;h1  i9-&gt;h1 
-  -0.18   -0.73   -0.53   -0.26   -0.39   -0.02   -0.10    0.13    0.55    0.30 
-i10-&gt;h1 i11-&gt;h1 i12-&gt;h1 i13-&gt;h1 i14-&gt;h1 i15-&gt;h1 i16-&gt;h1 i17-&gt;h1 i18-&gt;h1 i19-&gt;h1 
-  -0.40   -0.07   -0.41    0.34   -0.52    0.25    0.33    0.06   -0.06   -0.02 
-i20-&gt;h1 i21-&gt;h1 i22-&gt;h1 i23-&gt;h1 i24-&gt;h1 i25-&gt;h1 i26-&gt;h1 i27-&gt;h1 i28-&gt;h1 i29-&gt;h1 
-  -0.09   -0.12   -0.22    0.69    0.02   -0.20   -0.32   -0.02    0.15   -0.17 
-i30-&gt;h1 i31-&gt;h1 i32-&gt;h1 i33-&gt;h1 i34-&gt;h1 i35-&gt;h1 i36-&gt;h1 i37-&gt;h1 i38-&gt;h1 i39-&gt;h1 
-  -0.17    0.26   -0.42    0.03    0.12   -0.11    0.00   -0.67   -0.24    0.04 
-i40-&gt;h1 i41-&gt;h1 
-   0.00    0.02 
-  b-&gt;h2  i1-&gt;h2  i2-&gt;h2  i3-&gt;h2  i4-&gt;h2  i5-&gt;h2  i6-&gt;h2  i7-&gt;h2  i8-&gt;h2  i9-&gt;h2 
-   0.21    0.76    0.56    0.24    0.38    0.01    0.11   -0.14   -0.58   -0.33 
-i10-&gt;h2 i11-&gt;h2 i12-&gt;h2 i13-&gt;h2 i14-&gt;h2 i15-&gt;h2 i16-&gt;h2 i17-&gt;h2 i18-&gt;h2 i19-&gt;h2 
-   0.40    0.06    0.41   -0.35    0.56   -0.26   -0.35   -0.06    0.07    0.01 
-i20-&gt;h2 i21-&gt;h2 i22-&gt;h2 i23-&gt;h2 i24-&gt;h2 i25-&gt;h2 i26-&gt;h2 i27-&gt;h2 i28-&gt;h2 i29-&gt;h2 
-   0.11    0.11    0.23   -0.69    0.03    0.21    0.34    0.02   -0.15    0.18 
-i30-&gt;h2 i31-&gt;h2 i32-&gt;h2 i33-&gt;h2 i34-&gt;h2 i35-&gt;h2 i36-&gt;h2 i37-&gt;h2 i38-&gt;h2 i39-&gt;h2 
-   0.17   -0.27    0.45   -0.05   -0.12    0.13    0.01    0.72    0.24   -0.04 
-i40-&gt;h2 i41-&gt;h2 
-   0.00   -0.01 
-  b-&gt;h3  i1-&gt;h3  i2-&gt;h3  i3-&gt;h3  i4-&gt;h3  i5-&gt;h3  i6-&gt;h3  i7-&gt;h3  i8-&gt;h3  i9-&gt;h3 
-  -0.16   -0.78   -0.59   -0.31   -0.42   -0.06   -0.15    0.12    0.47    0.22 
-i10-&gt;h3 i11-&gt;h3 i12-&gt;h3 i13-&gt;h3 i14-&gt;h3 i15-&gt;h3 i16-&gt;h3 i17-&gt;h3 i18-&gt;h3 i19-&gt;h3 
-  -0.42   -0.09   -0.41    0.32   -0.41    0.24    0.28    0.06   -0.02   -0.05 
-i20-&gt;h3 i21-&gt;h3 i22-&gt;h3 i23-&gt;h3 i24-&gt;h3 i25-&gt;h3 i26-&gt;h3 i27-&gt;h3 i28-&gt;h3 i29-&gt;h3 
-  -0.05   -0.14   -0.23    0.69    0.15   -0.16   -0.30   -0.02    0.16   -0.15 
-i30-&gt;h3 i31-&gt;h3 i32-&gt;h3 i33-&gt;h3 i34-&gt;h3 i35-&gt;h3 i36-&gt;h3 i37-&gt;h3 i38-&gt;h3 i39-&gt;h3 
-  -0.20    0.23   -0.43    0.00    0.10   -0.07    0.00   -0.54   -0.22    0.04 
-i40-&gt;h3 i41-&gt;h3 
-   0.01    0.02 
-  b-&gt;h4  i1-&gt;h4  i2-&gt;h4  i3-&gt;h4  i4-&gt;h4  i5-&gt;h4  i6-&gt;h4  i7-&gt;h4  i8-&gt;h4  i9-&gt;h4 
-   0.12    0.72    0.54    0.31    0.41    0.05    0.11   -0.12   -0.46   -0.21 
-i10-&gt;h4 i11-&gt;h4 i12-&gt;h4 i13-&gt;h4 i14-&gt;h4 i15-&gt;h4 i16-&gt;h4 i17-&gt;h4 i18-&gt;h4 i19-&gt;h4 
-   0.42    0.11    0.41   -0.34    0.41   -0.24   -0.27   -0.06    0.00    0.05 
-i20-&gt;h4 i21-&gt;h4 i22-&gt;h4 i23-&gt;h4 i24-&gt;h4 i25-&gt;h4 i26-&gt;h4 i27-&gt;h4 i28-&gt;h4 i29-&gt;h4 
-   0.05    0.14    0.21   -0.72   -0.15    0.16    0.29    0.02   -0.16    0.14 
-i30-&gt;h4 i31-&gt;h4 i32-&gt;h4 i33-&gt;h4 i34-&gt;h4 i35-&gt;h4 i36-&gt;h4 i37-&gt;h4 i38-&gt;h4 i39-&gt;h4 
-   0.20   -0.22    0.41    0.00   -0.10    0.05   -0.01    0.54    0.23   -0.03 
-i40-&gt;h4 i41-&gt;h4 
-  -0.01   -0.07 
-  b-&gt;h5  i1-&gt;h5  i2-&gt;h5  i3-&gt;h5  i4-&gt;h5  i5-&gt;h5  i6-&gt;h5  i7-&gt;h5  i8-&gt;h5  i9-&gt;h5 
-  -0.37    0.91    0.91    0.63    0.82    0.16   -0.04    0.00    0.01    0.34 
-i10-&gt;h5 i11-&gt;h5 i12-&gt;h5 i13-&gt;h5 i14-&gt;h5 i15-&gt;h5 i16-&gt;h5 i17-&gt;h5 i18-&gt;h5 i19-&gt;h5 
-   0.30    0.40    0.29   -0.26   -0.35   -0.20    0.01   -0.15   -0.45    0.25 
-i20-&gt;h5 i21-&gt;h5 i22-&gt;h5 i23-&gt;h5 i24-&gt;h5 i25-&gt;h5 i26-&gt;h5 i27-&gt;h5 i28-&gt;h5 i29-&gt;h5 
-  -0.18    0.24    0.10   -0.75   -0.35   -0.04    0.10   -0.10   -0.24    0.06 
-i30-&gt;h5 i31-&gt;h5 i32-&gt;h5 i33-&gt;h5 i34-&gt;h5 i35-&gt;h5 i36-&gt;h5 i37-&gt;h5 i38-&gt;h5 i39-&gt;h5 
-   0.14    0.00    0.26    0.19    0.00   -0.33   -0.05   -0.26    0.40   -0.33 
-i40-&gt;h5 i41-&gt;h5 
-  -0.08   -0.22 
-  b-&gt;h6  i1-&gt;h6  i2-&gt;h6  i3-&gt;h6  i4-&gt;h6  i5-&gt;h6  i6-&gt;h6  i7-&gt;h6  i8-&gt;h6  i9-&gt;h6 
-   0.47   -0.92   -1.05   -0.77   -0.91   -0.16    0.03   -0.01   -0.04   -0.40 
-i10-&gt;h6 i11-&gt;h6 i12-&gt;h6 i13-&gt;h6 i14-&gt;h6 i15-&gt;h6 i16-&gt;h6 i17-&gt;h6 i18-&gt;h6 i19-&gt;h6 
-  -0.29   -0.44   -0.25    0.25    0.39    0.21   -0.02    0.16    0.51   -0.27 
-i20-&gt;h6 i21-&gt;h6 i22-&gt;h6 i23-&gt;h6 i24-&gt;h6 i25-&gt;h6 i26-&gt;h6 i27-&gt;h6 i28-&gt;h6 i29-&gt;h6 
-   0.19   -0.24   -0.11    0.79    0.34    0.06   -0.11    0.17    0.26   -0.07 
-i30-&gt;h6 i31-&gt;h6 i32-&gt;h6 i33-&gt;h6 i34-&gt;h6 i35-&gt;h6 i36-&gt;h6 i37-&gt;h6 i38-&gt;h6 i39-&gt;h6 
-  -0.10   -0.02   -0.22   -0.21   -0.01    0.38    0.05    0.32   -0.44    0.38 
-i40-&gt;h6 i41-&gt;h6 
-   0.10    0.24 
- b-&gt;o1 h1-&gt;o1 h2-&gt;o1 h3-&gt;o1 h4-&gt;o1 h5-&gt;o1 h6-&gt;o1 
-  0.00  -1.00   0.97  -1.16   1.16   2.04  -2.21 
- b-&gt;o2 h1-&gt;o2 h2-&gt;o2 h3-&gt;o2 h4-&gt;o2 h5-&gt;o2 h6-&gt;o2 
- -0.01   1.79  -1.87   1.71  -1.68  -0.87   0.82 
- b-&gt;o3 h1-&gt;o3 h2-&gt;o3 h3-&gt;o3 h4-&gt;o3 h5-&gt;o3 h6-&gt;o3 
-  0.01  -0.79   0.90  -0.55   0.53  -1.17   1.40 </code></pre>
-</div>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># modelo_tuneado$bestTune</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(modelo_tuneado)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
@@ -531,49 +457,17 @@ i40-&gt;h6 i41-&gt;h6
 <section id="modelo-tuneado" class="level3">
 <h3 class="anchored" data-anchor-id="modelo-tuneado">8.2 Modelo Tuneado</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>modelo3 <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(clasificacion <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"nnet"</span>, <span class="at">trace =</span> F, <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">decay =</span> <span class="fl">1.258925</span>), <span class="at">nnet =</span> <span class="fu">list</span>(<span class="at">droput =</span> <span class="fl">0.5</span>), <span class="at">activation =</span> <span class="st">"logistic"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>pm3 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rprof(memory.profiling = TRUE)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># modelo3 &lt;- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 10, decay = 1.258925), nnet = list(droput = 0.5), activation = "logistic")</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rprof(NULL)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pm3 &lt;- summaryRprof(memory = "both")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>prediccion3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo3, <span class="at">newdata =</span> test)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cfm3 <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(prediccion3, test<span class="sc">$</span>clasificacion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prediccion3 &lt;- predict(modelo3, newdata = test)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cfm3 &lt;- confusionMatrix(prediccion3, test$clasificacion)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cfm3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Confusion Matrix and Statistics
-
-             Reference
-Prediction    Caras Economicas Intermedias
-  Caras         130          0          17
-  Economicas      0        111          30
-  Intermedias    22         29         100
-
-Overall Statistics
-                                          
-               Accuracy : 0.7768          
-                 95% CI : (0.7349, 0.8149)
-    No Information Rate : 0.3462          
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-                                          
-                  Kappa : 0.665           
-                                          
- Mcnemar's Test P-Value : NA              
-
-Statistics by Class:
-
-                     Class: Caras Class: Economicas Class: Intermedias
-Sensitivity                0.8553            0.7929             0.6803
-Specificity                0.9408            0.8997             0.8253
-Pos Pred Value             0.8844            0.7872             0.6623
-Neg Pred Value             0.9247            0.9027             0.8368
-Prevalence                 0.3462            0.3189             0.3349
-Detection Rate             0.2961            0.2528             0.2278
-Detection Prevalence       0.3349            0.3212             0.3440
-Balanced Accuracy          0.8980            0.8463             0.7528</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfm3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Se obtuvo un accuracy de 0.77, solo un 0.01 arriba del mejor accuracy anterior. Por lo que no se tiene una diferencia tan significativa para el modelo. Es casi seguro que el overfitting se mantuvo.</p>
 </section>
@@ -581,14 +475,14 @@ Balanced Accuracy          0.8980            0.8463             0.7528</code></p
 <section id="selección-de-saleprice-como-variable-respuesta" class="level2">
 <h2 class="anchored" data-anchor-id="selección-de-saleprice-como-variable-respuesta">9. Selección de SalePrice como variable respuesta</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>porcentaje <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>corte <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(datos), <span class="fu">nrow</span>(datos) <span class="sc">*</span> porcentaje)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[corte, ]</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> datos[<span class="sc">-</span>corte, ]</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> train[, numeric_variables]</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test[, numeric_variables]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>porcentaje <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>corte <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(datos), <span class="fu">nrow</span>(datos) <span class="sc">*</span> porcentaje)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[corte, ]</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> datos[<span class="sc">-</span>corte, ]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> train[, multi_variables]</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test[, multi_variables]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="modelos-de-regresión-lineal-con-redes-neuronales." class="level2">
@@ -596,11 +490,20 @@ Balanced Accuracy          0.8980            0.8463             0.7528</code></p
 <section id="primer-modelo-2" class="level3">
 <h3 class="anchored" data-anchor-id="primer-modelo-2">10.1 Primer modelo</h3>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">neuralnet</span>(SalePrice<span class="sc">~</span>., train, <span class="at">hidden =</span> <span class="dv">2</span>, <span class="at">rep =</span> <span class="dv">3</span>, <span class="at">act.fct =</span> <span class="st">"logistic"</span>,<span class="at">linear.output =</span> <span class="cn">TRUE</span> )</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>pm1 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="segundo-modelo-2" class="level3">
 <h3 class="anchored" data-anchor-id="segundo-modelo-2">10.2 Segundo modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="at">memory.profiling =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">neuralnet</span>(SalePrice <span class="sc">~</span> ., <span class="at">data=</span>train, <span class="at">threshold=</span><span class="fl">0.0001</span>, <span class="at">act.fct =</span> <span class="st">"tanh"</span>,<span class="at">err.fct =</span> <span class="st">"sse"</span>,<span class="at">linear.output =</span> <span class="cn">TRUE</span> )</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Rprof</span>(<span class="cn">NULL</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>pm2 <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="at">memory =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="predicción" class="level2">
@@ -608,7 +511,177 @@ Balanced Accuracy          0.8980            0.8463             0.7528</code></p
 <section id="predicción-con-primer-modelo-1" class="level3">
 <h3 class="anchored" data-anchor-id="predicción-con-primer-modelo-1">11.1 Predicción con primer modelo</h3>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>prediction_1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model1, test)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">mean</span>((test<span class="sc">$</span>SalePrice <span class="sc">-</span> prediction_1)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((test<span class="sc">$</span>SalePrice<span class="sc">-</span> prediction_1)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((test<span class="sc">$</span>SalePrice <span class="sc">-</span> <span class="fu">mean</span>(test<span class="sc">$</span>SalePrice))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>prediction_1_train <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">predict</span>(model1, <span class="at">newdata =</span> train), <span class="dv">0</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>R_squared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (SSR <span class="sc">/</span> SST)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>MSE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1554653</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>RMSE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3942908</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>R_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8322607</code></pre>
+</div>
+</div>
+</section>
+<section id="predicción-con-segundo-modelo-1" class="level3">
+<h3 class="anchored" data-anchor-id="predicción-con-segundo-modelo-1">11.2 Predicción con segundo modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>prediction_2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2, test)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">mean</span>((test<span class="sc">$</span>SalePrice <span class="sc">-</span> prediction_2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((test<span class="sc">$</span>SalePrice<span class="sc">-</span> prediction_2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((test<span class="sc">$</span>SalePrice <span class="sc">-</span> <span class="fu">mean</span>(test<span class="sc">$</span>SalePrice))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>prediction_2_train <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">predict</span>(model2, <span class="at">newdata =</span> train), <span class="dv">0</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>R_squared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (SSR <span class="sc">/</span> SST)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>MSE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1362754</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>RMSE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.369155</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>R_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8529656</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="análisis-de-overfitting-1" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-overfitting-1">12. Análisis de overfitting</h2>
+<section id="primer-modelo-3" class="level3">
+<h3 class="anchored" data-anchor-id="primer-modelo-3">12.1 Primer modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>train_errors <span class="ot">&lt;-</span> (prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>test_errors <span class="ot">&lt;-</span> (prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HDT_8_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    pred_train<span class="ot">&lt;-</span><span class="fu">predict</span>(model1,<span class="at">newdata =</span> train_data )</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    pred<span class="ot">&lt;-</span><span class="fu">predict</span>(model1,<span class="at">newdata =</span> test_data)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Train =</span> rmse_train,</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Test =</span> rmse_test</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rmse_df, <span class="fu">aes</span>(<span class="at">x =</span> Fold)) <span class="sc">+</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de Entrenamiento"</span>)) <span class="sc">+</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de Prueba"</span>)) <span class="sc">+</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Valores de RMSE en la validación cruzada"</span>,</span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fold"</span>,</span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de Entrenamiento"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de Prueba"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HDT_8_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="segundo-modelo-3" class="level3">
+<h3 class="anchored" data-anchor-id="segundo-modelo-3">12.2 Segundo modelo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>train_errors <span class="ot">&lt;-</span> (prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>test_errors <span class="ot">&lt;-</span> (prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HDT_8_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    pred_train<span class="ot">&lt;-</span><span class="fu">predict</span>(modelo2,<span class="at">newdata =</span> train_data )</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    pred<span class="ot">&lt;-</span><span class="fu">predict</span>(model2,<span class="at">newdata =</span> test_data)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in Ops.factor(pred, obs): '-' not meaningful for factors
 
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors
+
+Warning in Ops.factor(pred, obs): '-' not meaningful for factors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Train =</span> rmse_train,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Test =</span> rmse_test</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rmse_df, <span class="fu">aes</span>(<span class="at">x =</span> Fold)) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de Entrenamiento"</span>)) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de Prueba"</span>)) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Valores de RMSE en la validación cruzada"</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fold"</span>,</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de Entrenamiento"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de Prueba"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="HDT_8_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 </section>
 </section>
