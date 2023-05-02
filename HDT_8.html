@@ -391,11 +391,11 @@ Balanced Accuracy          0.8821            0.8775             0.7800</code></p
 <h2 class="anchored" data-anchor-id="comparacion-de-resultados">6 Comparacion de resultados</h2>
 <section id="red-neuronal-1" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-1">Red neuronal 1</h3>
-<p>Este modelo obtuvo un accurracy de 0.754 Este modelo obtuvo un tiempo de procesamiento de 1.64 El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.</p>
+<p>Este modelo obtuvo un accurracy de 0.754 Este modelo obtuvo un tiempo de procesamiento de 1.72 El modelo obtuvo un sensitivity de 0.855 y un specificity de 0.899 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="red-neuronal-2" class="level3">
 <h3 class="anchored" data-anchor-id="red-neuronal-2">Red neuronal 2</h3>
-<p>Este modelo obtuvo un accurracy de 0.719 Este modelo obtuvo un tiempo de procesamiento de 5.46 El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.</p>
+<p>Este modelo obtuvo un accurracy de 0.719 Este modelo obtuvo un tiempo de procesamiento de 6.2 El modelo obtuvo un sensitivity de 0.789 y un specificity de 0.919 indicando asi que modelo no tiene tantas equivocaciones.</p>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
@@ -555,134 +555,164 @@ Balanced Accuracy          0.8821            0.8775             0.7800</code></p
 <pre><code>[1] 0.8529656</code></pre>
 </div>
 </div>
+<p>Se puede observar que ambos modelos fueron bastante buenos para realizar la predicción de los precios de las casas. Se tuvo un bajo MSE y RMSE en ambos modelos. El mejor modelo fue el segundo, teniendo 0.02 puntos menos en MSE que el primero. Además, su R^2 fue mejor, con un valor de 0.85 sobre 0.83. Estos valores altos indican que puede existir overfitting, porque la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.</p>
 </section>
 </section>
-<section id="análisis-de-overfitting-1" class="level2">
-<h2 class="anchored" data-anchor-id="análisis-de-overfitting-1">12. Análisis de overfitting</h2>
-<section id="primer-modelo-3" class="level3">
-<h3 class="anchored" data-anchor-id="primer-modelo-3">12.1 Primer modelo</h3>
+<section id="analice-si-no-hay-sobreajuste" class="level2">
+<h2 class="anchored" data-anchor-id="analice-si-no-hay-sobreajuste">12. Analice si no hay sobreajuste</h2>
+<section id="modelo-1-analisis-de-sobreajuste" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-1-analisis-de-sobreajuste">Modelo 1 analisis de sobreajuste</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>    mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>train_errors <span class="ot">&lt;-</span> (prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>test_errors <span class="ot">&lt;-</span> (prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    train_errors <span class="ot">&lt;-</span> (prediction_1_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    test_errors <span class="ot">&lt;-</span> (prediction_1 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="HDT_8_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>    folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>        test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    pred_train<span class="ot">&lt;-</span><span class="fu">predict</span>(model1,<span class="at">newdata =</span> train_data )</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    pred<span class="ot">&lt;-</span><span class="fu">predict</span>(model1,<span class="at">newdata =</span> test_data)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>        pred_train<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">predict</span>(model1,<span class="at">newdata =</span> train_data ),<span class="dv">0</span>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>        pred<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">predict</span>(model1,<span class="at">newdata =</span> test_data),<span class="dv">0</span>)</span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>        rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>        rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Train =</span> rmse_train,</span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Test =</span> rmse_test</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE_Train =</span> rmse_train,</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE_Test =</span> rmse_test</span>
 <span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rmse_df, <span class="fu">aes</span>(<span class="at">x =</span> Fold)) <span class="sc">+</span></span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de Entrenamiento"</span>)) <span class="sc">+</span></span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de Prueba"</span>)) <span class="sc">+</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de training"</span>)) <span class="sc">+</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de test"</span>)) <span class="sc">+</span></span>
 <span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Valores de RMSE en la validación cruzada"</span>,</span>
 <span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fold"</span>,</span>
 <span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de Entrenamiento"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de Prueba"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de training"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de test"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
 <span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="HDT_8_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="segundo-modelo-3" class="level3">
-<h3 class="anchored" data-anchor-id="segundo-modelo-3">12.2 Segundo modelo</h3>
+<section id="modelo-2-analisis-de-sobreajuste" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-2-analisis-de-sobreajuste">Modelo 2 analisis de sobreajuste</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>    mse_train <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    mse_test <span class="ot">&lt;-</span> <span class="fu">mean</span>((prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>train_errors <span class="ot">&lt;-</span> (prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>test_errors <span class="ot">&lt;-</span> (prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    train_errors <span class="ot">&lt;-</span> (prediction_2_train <span class="sc">-</span> train<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    test_errors <span class="ot">&lt;-</span> (prediction_2 <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(<span class="fu">seq_along</span>(train_errors), train_errors, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">420</span>), <span class="at">xlab=</span><span class="st">"Observation"</span>, <span class="at">ylab=</span><span class="st">"MSE"</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">seq_along</span>(test_errors), test_errors, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Train"</span>, <span class="st">"Test"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="HDT_8_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>    folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(train<span class="sc">$</span>SalePrice,<span class="at">k =</span> <span class="dv">10</span>, <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    rmse_train <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    rmse_test <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">length =</span> <span class="fu">length</span>(folds))</span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds)){</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        train_data <span class="ot">&lt;-</span> train[folds[[i]],]</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>        test_data <span class="ot">&lt;-</span> train[<span class="sc">-</span>folds[[i]],]</span>
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    pred_train<span class="ot">&lt;-</span><span class="fu">predict</span>(modelo2,<span class="at">newdata =</span> train_data )</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    pred<span class="ot">&lt;-</span><span class="fu">predict</span>(model2,<span class="at">newdata =</span> test_data)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>        pred_train<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">predict</span>(model2,<span class="at">newdata =</span> train_data ),<span class="dv">0</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>        pred<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">predict</span>(model2,<span class="at">newdata =</span> test_data),<span class="dv">0</span>)</span>
 <span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors
-
-Warning in Ops.factor(pred, obs): '-' not meaningful for factors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Train =</span> rmse_train,</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">RMSE_Test =</span> rmse_test</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rmse_df, <span class="fu">aes</span>(<span class="at">x =</span> Fold)) <span class="sc">+</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de Entrenamiento"</span>)) <span class="sc">+</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de Prueba"</span>)) <span class="sc">+</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Valores de RMSE en la validación cruzada"</span>,</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fold"</span>,</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de Entrenamiento"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de Prueba"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 10 rows containing missing values (`geom_line()`).</code></pre>
-</div>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>        rmse_train[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred_train, train_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>        rmse_test[i] <span class="ot">&lt;-</span> <span class="fu">RMSE</span>(pred, test_data<span class="sc">$</span>SalePrice)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    rmse_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fold =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(folds),</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE_Train =</span> rmse_train,</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMSE_Test =</span> rmse_test</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rmse_df, <span class="fu">aes</span>(<span class="at">x =</span> Fold)) <span class="sc">+</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Train, <span class="at">color =</span> <span class="st">"Conjunto de training"</span>)) <span class="sc">+</span></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> RMSE_Test, <span class="at">color =</span> <span class="st">"Conjunto de test"</span>)) <span class="sc">+</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Valores de RMSE en la validación cruzada"</span>,</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fold"</span>,</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"RMSE"</span>) <span class="sc">+</span></span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Conjunto de trainig"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Conjunto de test"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="HDT_8_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>En las curvas de aprendijaze que se muestran anteriormente se puede notar que tanto para test como para training no existe un comportamiento normal de la curva, por lo que se puede decir que si existe sobreajuste ambos modelos. Esto se puede deber a que la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.</p>
+</section>
+</section>
+<section id="discuta-si-puede-mejorar-el-modelo." class="level2">
+<h2 class="anchored" data-anchor-id="discuta-si-puede-mejorar-el-modelo.">13.Discuta si puede mejorar el modelo.</h2>
+<p>A pesar de haber implementado técnicas para evitar el sobreajuste en los modelos creados, tales como el ajuste de parámetros y el uso de validación cruzada con diferentes funciones de activación, así como el parámetro de dropout, estos aún presentan dicho problema. Lamentablemente, ninguna de estas técnicas ha logrado mejorar los modelos, por lo que no es factible mejorar ninguno de ellos.</p>
+</section>
+<section id="compare-la-eficiencia" class="level2">
+<h2 class="anchored" data-anchor-id="compare-la-eficiencia">14. Compare la eficiencia</h2>
+<p>El modelo 1 de RNA se tardo 8.72 ms, mientras que el modelo 2 se tardó 0.08 ms.</p>
+<section id="random-forest" class="level3">
+<h3 class="anchored" data-anchor-id="random-forest">Random Forest</h3>
+<p>El modelo logró un accuracy de 0.8269 y un tiempo de procesamiento de 0.82 ms. Además, obtuvo una sensitivity de 0.8947 y una specificity de 0.9443, lo que sugiere que el modelo tiene un bajo índice de errores.</p>
+</section>
+<section id="arboles-de-decision" class="level3">
+<h3 class="anchored" data-anchor-id="arboles-de-decision">Arboles de Decision</h3>
+<p>El modelo logró un accuracy de 0.7312 y un tiempo de procesamiento de 0.95 ms. Asimismo, obtuvo una sensitivity de 0.7730 y una specificity de 0.9058. Estos resultados sugieren que los errores del modelo se deben principalmente a la clasificación incorrecta de verdaderos positivos.</p>
+</section>
+<section id="naive-bayes" class="level3">
+<h3 class="anchored" data-anchor-id="naive-bayes">Naive bayes</h3>
+<p>El modelo logró un accuracy de 0.7472 y un tiempo de procesamiento de 0.64 ms. Además, obtuvo una sensitivity de 0.8355 y una specificity de 0.9582, lo que sugiere que el modelo tiene un bajo índice de errores, con algunas excepciones en casos de falsos negativos.</p>
+</section>
+<section id="svm" class="level3">
+<h3 class="anchored" data-anchor-id="svm">SVM</h3>
+<p>El modelo logró un accuracy de 0.7173 y un tiempo de procesamiento de 0.72 ms. Además, obtuvo una sensitivity de 0.7368 y una specificity de 0.8837, lo que sugiere que el modelo tiene dificultades para identificar los verdaderos positivos.</p>
+</section>
+</section>
+<section id="comparar-los-resultados-del-mejor-modelo-de-esta-hoja-para-clasificar-con-los-resultados-de-los-algoritmos-usados-para-clasificar-de-las-hojas-de-trabajo-anteriores" class="level2">
+<h2 class="anchored" data-anchor-id="comparar-los-resultados-del-mejor-modelo-de-esta-hoja-para-clasificar-con-los-resultados-de-los-algoritmos-usados-para-clasificar-de-las-hojas-de-trabajo-anteriores">15. Comparar los resultados del mejor modelo de esta hoja para clasificar con los resultados de los algoritmos usados para clasificar de las hojas de trabajo anteriores</h2>
+<p>Para el modelo de RNA: - accuracy de 0.7768 - sensitivity de 0.8553 - specificity de 0.9408</p>
+<p>Para el modelo de Random Forest: - accuracy de 0.8269 - sensitivity de 0.8947 - specificity de 0.9443</p>
+<p>Para el modelo de Arboles de Decision: - accuracy de 0.7312 - sensitivity de 0.7730 - specificity de 0.9082</p>
+<p>Para el modelo de Naive Bayes: - accuracy de 0.7472 - sensitivity de 0.8355 - specificity de 0.9582</p>
+<p>Para el modelo de SVM: - accuracy de 0.7173 - sensitivity de 0.7368 - specificity de 0.8837</p>
+<p>En base a la métrica de accuracy, el modelo de Random Forest con un valor de 0.8269 es el mejor modelo. Además, este modelo también muestra los valores más altos de especificidad y sensibilidad. En comparación, el modelo de RNA obtuvo una exactitud de 0.7768, por lo que no es el mejor modelo para la clasificación y no parece ser mejor que los modelos previamente creados.</p>
+<section id="comparar-los-resultados-del-mejor-modelo-para-predecir-el-precio-de-venta-con-los-resultados-de-los-algoritmos-usados-para-el-mismo-propósito-de-las-hojas-de-trabajo-anteriores." class="level3">
+<h3 class="anchored" data-anchor-id="comparar-los-resultados-del-mejor-modelo-para-predecir-el-precio-de-venta-con-los-resultados-de-los-algoritmos-usados-para-el-mismo-propósito-de-las-hojas-de-trabajo-anteriores.">16. Comparar los resultados del mejor modelo para predecir el precio de venta con los resultados de los algoritmos usados para el mismo propósito de las hojas de trabajo anteriores.</h3>
+<p>Para el modelo de regresión lineal simple: - r-cuadrado de 0.61 - RMSE de 0.58</p>
+<p>Para el modelo de regresión lineal múltiple: - r-cuadrado de 0.75 - RMSE de 0.42</p>
+<p>Para el modelo de SVM: - r-cuadrado de 0.81 - RMSE de 0.41</p>
+<p>Para el modelo de arbol de regresión: - r-cuadrado de 0.70 - RMSE de 0.52</p>
+<p>Para el modelo actual de RNA: - r-cuadrado de 0.49 - RMSE de 0.37</p>
+<p>Se puede observar que el mejor modelo para predecir el precio de venta es el modelo de SVM, ya que tiene un valor de R-cuadrado de 0.81 y un RMSE de 0.41. En comparación, el modelo de RNA tiene un valor de R-cuadrado de 0.49 y un RMSE de 0.37, lo que sugiere que no es un buen modelo para predecir el precio de venta.</p>
+</section>
+<section id="ahora-que-ha-usado-todos-los-modelos-que-hemos-visto-y-aplicados-al-conjunto-de-datos-llegue-a-conclusiones-sobre-cual-es-o-cuales-son-los-mejores-modelos-para-clasificar-dadas-las-características-del-conjunto-de-datos.-cuál-o-cuáles-son-los-mejores-para-predecir-el-precio-de-las-casas-una-tabla-de-resumen-con-las-métricas-de-los-modelos-le-puede-resultar-muy-útil-para-esto." class="level3">
+<h3 class="anchored" data-anchor-id="ahora-que-ha-usado-todos-los-modelos-que-hemos-visto-y-aplicados-al-conjunto-de-datos-llegue-a-conclusiones-sobre-cual-es-o-cuales-son-los-mejores-modelos-para-clasificar-dadas-las-características-del-conjunto-de-datos.-cuál-o-cuáles-son-los-mejores-para-predecir-el-precio-de-las-casas-una-tabla-de-resumen-con-las-métricas-de-los-modelos-le-puede-resultar-muy-útil-para-esto.">17. Ahora que ha usado todos los modelos que hemos visto y aplicados al conjunto de datos llegue a conclusiones sobre cual es o cuales son los mejores modelos para clasificar dadas las características del conjunto de datos. ¿Cuál o cuáles son los mejores para predecir el precio de las casas? Una tabla de resumen con las métricas de los modelos le puede resultar muy útil para esto.</h3>
+<p>Para el modelo de regresión lineal simple: - r-cuadrado de 0.61 - RMSE de 0.58</p>
+<p>Para el modelo de regresión lineal múltiple: - r-cuadrado de 0.75 - RMSE de 0.42</p>
+<p>Para el modelo de SVM: - r-cuadrado de 0.81 - RMSE de 0.41</p>
+<p>Para el modelo de arbol de regresión: - r-cuadrado de 0.70 - RMSE de 0.52</p>
+<p>Para el modelo actual de RNA: - r-cuadrado de 0.49 - RMSE de 0.37</p>
+<p>Basándonos en el análisis de los resultados obtenidos, podemos concluir que el modelo de SVM es el mejor para predecir el precio de venta, ya que presenta el valor más alto de R-cuadrado y un RMSE más bajo en comparación con los otros modelos evaluados. El modelo de regresión lineal múltiple también presenta un buen desempeño, aunque no tan alto como el modelo de SVM. Es importante tener en cuenta que la elección del mejor modelo depende de diferentes factores, como la complejidad del modelo y la interpretación de las variables, por lo que se recomienda considerar cuidadosamente los resultados y seleccionar el modelo que mejor se ajuste a las necesidades específicas del problema en cuestión.</p>
 </section>
 </section>
 
