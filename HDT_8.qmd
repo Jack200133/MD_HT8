@@ -81,11 +81,11 @@ p33 <- quantile(datos$SalePrice, 0.33)
 p66 <- quantile(datos$SalePrice, 0.66)
 
 datos <- datos %>%
-    mutate(clasificacion = ifelse(datos$SalePrice < p33, "Economicas",
-        ifelse(datos$SalePrice < p66, "Intermedias",
-            "Caras"
-        )
-    ))
+      mutate(clasificacion = ifelse(datos$SalePrice < p33, "Economicas",
+            ifelse(datos$SalePrice < p66, "Intermedias",
+                  "Caras"
+            )
+      ))
 datos$clasificacion <- as.factor(datos$clasificacion)
 ```
 
@@ -183,14 +183,14 @@ Segun los datos que se observan anteriormente se puede definir que el mejor mode
 ### 7.1 Primer modelo
 
 ```{r warning=FALSE, message=FALSE}
-    # datos.task = makeClassifTask(data = train, target = "clasificacion")
-    # rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
-    # lrn = makeLearner("classif.nnet", size = 4, decay = 1e-4, maxit = 1000, trace = FALSE)
-    # lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
-    #                                 percs = seq(0.1, 1, by = 0.1),
-    #                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
-    #                                 show.info = FALSE)
-    # plotLearningCurve(lc2, facet = "learner")
+    datos.task = makeClassifTask(data = train, target = "clasificacion")
+    rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
+    lrn = makeLearner("classif.nnet", size = 4, decay = 1e-4, maxit = 1000, trace = FALSE)
+    lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
+                                      percs = seq(0.1, 1, by = 0.1),
+                                      measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
+                                      show.info = FALSE)
+      plotLearningCurve(lc2, facet = "learner")
 ```
 
 Tras observar la curva de aprendizaje, se puede notar que la curva de training siempre va en ascenso, mientras mayor cantidad de datos mayor es la curva lo que indica que el modelo no posee un infra ajuste. Por otro lado, al observar la curva de test se nota que al final con el último grupo de datos en lugar de que la curva disminuye va en aumento lo que no debe de pasar, indicando así que el modelo posee sobreajuste. Además, se puede reforzar esta conclusión al notar que las dos curvas nunca llegan a converger y la distancia entre ellas es muy amplia.
@@ -198,77 +198,77 @@ Tras observar la curva de aprendizaje, se puede notar que la curva de training s
 ### 7.2 Segundo modelo
 
 ```{r warning=FALSE, message=FALSE}
-    # datos.task = makeClassifTask(data = train, target = "clasificacion")
-    # rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
-    # lrn = makeLearner("classif.nnet", size = 16, decay = 1e-4, maxit = 1000, trace = FALSE)
-    # lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
-    #                                 percs = seq(0.1, 1, by = 0.1),
-    #                                 measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
-    #                                 show.info = FALSE)
-    # plotLearningCurve(lc2, facet = "learner")
+    datos.task = makeClassifTask(data = train, target = "clasificacion")
+    rin2 = makeResampleDesc(method = "CV", iters = 10, predict = "both")
+    lrn = makeLearner("classif.nnet", size = 16, decay = 1e-4, maxit = 1000, trace = FALSE)
+    lc2 = generateLearningCurveData(learners = lrn, task = datos.task,
+                                    percs = seq(0.1, 1, by = 0.1),
+                                    measures = list(ber, setAggregation(ber, train.mean)), resampling = rin2,
+                                      show.info = FALSE)
+      plotLearningCurve(lc2, facet = "learner")
 ```
-
+  
 El segundo modelo se evidencia en su curva de aprendizaje que tiene overfitting. Se aprecia que la curva de entrenamiento sube cuando se tienen más datos, lo cual indica que el modelo se está ajustando mucho a ellos. Además, existe un espacio demasiado grande entre curvas. Este sobreajuste se puede deber a que la complejidad del modelo es demasiado alta para los datos que se tienen. También es posible que se tengan muy pocos datos y/o features.
 
 
 ## 8. Tuneo de parametros
 
 ```{r }
-# grid <- expand.grid(size = c(2, 4, 6, 10),
-#                     decay = c(0.01, 0.1, 0.5, 1.5, 1.25))
+grid <- expand.grid(size = c(2, 4, 6, 10),
+                    decay = c(0.01, 0.1, 0.5, 1.5, 1.25))
 
-# modelo_tuneado <- caret::train(clasificacion ~ ., 
-#                                data = train, 
-#                                method = "nnet", 
-#                                trace = F, 
-#                                tuneGrid = grid, 
-#                                nnet = list(droput = 0.5), 
-#                                maxit = 100)
-
-# modelo_tuneado$bestTune
-# summary(modelo_tuneado)
-
+modelo_tuneado <- caret::train(clasificacion ~ ., 
+                               data = train, 
+                                 method = "nnet", 
+                                 trace = F, 
+                               tuneGrid = grid, 
+                               nnet = list(droput = 0.5), 
+                               maxit = 100)
+  
+modelo_tuneado$bestTune
+summary(modelo_tuneado)
+  
 ```
-
+  
 ```{r echo=F, message=F}
 
-# library(mlr)
+library(mlr)
 
-# set.seed(123) # Establecer una semilla para la reproducibilidad
-# train_indices <- sample(1:nrow(test), size = floor(0.5 * nrow(test)))
-# train_50 <- train[train_indices, ]
-# valid_50 <- train[-train_indices, ]
+set.seed(123) # Establecer una semilla para la reproducibilidad
+train_indices <- sample(1:nrow(test), size = floor(0.5 * nrow(test)))
+train_50 <- train[train_indices, ]
+valid_50 <- train[-train_indices, ]
 
-# # Crear la tarea de clasificación
-# datos.task <- makeClassifTask(data = train_50, target = "clasificacion")
+# Crear la tarea de clasificación
+datos.task <- makeClassifTask(data = train_50, target = "clasificacion")
 
-# # Crear el descriptor de muestreo
-# resampling <- makeResampleDesc("CV", iters = 10)
+# Crear el descriptor de muestreo
+resampling <- makeResampleDesc("CV", iters = 10)
 
-# # Crear el aprendiz con el algoritmo deseado
-# learner <- makeLearner("classif.nnet", predict.type = "prob")
+# Crear el aprendiz con el algoritmo deseado
+learner <- makeLearner("classif.nnet", predict.type = "prob")
 
-# # Definir los rangos de hiperparámetros
-# param_set <- makeParamSet(
-#   makeDiscreteParam("size", values = c(2, 4, 6, 8, 10)),
-#   makeNumericParam("decay", lower = 1e-5, upper = 1e-1, trafo = function(x) 10^x)
-# )
+# Definir los rangos de hiperparámetros
+param_set <- makeParamSet(
+  makeDiscreteParam("size", values = c(2, 4, 6, 8, 10)),
+  makeNumericParam("decay", lower = 1e-5, upper = 1e-1, trafo = function(x) 10^x)
+)
 
-# # Definir la estrategia de búsqueda en cuadrícula
-# control <- makeTuneControlGrid()
+# Definir la estrategia de búsqueda en cuadrícula
+control <- makeTuneControlGrid()
 
-# # Configurar la búsqueda de hiperparámetros
-# tune_params <- makeTuneWrapper(learner, resampling, measures = list(ber), par.set = param_set, control = control)
+#   Configurar la búsqueda de hiperparámetros
+tune_params <- makeTuneWrapper(learner, resampling, measures = list(ber), par.set = param_set, control = control)
 
-# # Ejecutar la búsqueda de hiperparámetros
-# res <- resample(tune_params, datos.task, resampling, measures = list(ber), extract = getTuneResult)
+# Ejecutar la búsqueda de hiperparámetros
+res <- resample(tune_params, datos.task, resampling, measures = list(ber), extract = getTuneResult)
 
-# # Mostrar los resultados
-# print(res)
+# Mostrar los resultados
+print(res)
 
-# # Obtener el mejor conjunto de hiperparámetros
-# best_params <- res$extract[[1]]$x
-# print(best_params)
+# Obtener el mejor conjunto de hiperparámetros
+best_params <- res$extract[[1]]$x
+print(best_params)
 
 ```
 
@@ -277,18 +277,18 @@ Al utilizar crossvalidation con parameter tuning, se obtuvo que la mejor cantida
 ### 8.2 Modelo Tuneado
 
 ```{r}
-# Rprof(memory.profiling = TRUE)
-# modelo3 <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 10, decay = 1.258925), nnet = list(droput = 0.5), activation = "logistic")
-# Rprof(NULL)
-# pm3 <- summaryRprof(memory = "both")
+Rprof(memory.profiling = TRUE)
+modelo3 <- caret::train(clasificacion ~ ., data = train, method = "nnet", trace = F, tuneGrid = expand.grid(size = 10, decay = 1.258925), nnet = list(droput = 0.5), activation = "logistic")
+Rprof(NULL)
+pm3 <- summaryRprof(memory = "both")
 ```
 ```{r}
-# prediccion3 <- predict(modelo3, newdata = test)
-# cfm3 <- confusionMatrix(prediccion3, test$clasificacion)
+prediccion3 <- predict(modelo3, newdata = test)
+cfm3 <- confusionMatrix(prediccion3, test$clasificacion)
 ```
 
 ```{r}
-# cfm3
+cfm3
 ```
 
 Se obtuvo un accuracy de 0.77, solo un 0.01 arriba del mejor accuracy anterior. Por lo que no se tiene una diferencia tan significativa para el modelo. Es casi seguro que el overfitting se mantuvo.
@@ -392,32 +392,32 @@ Se puede observar que ambos modelos fueron bastante buenos para realizar la pred
         pred<-round(predict(model1,newdata = test_data),0)
 
         rmse_train[i] <- RMSE(pred_train, train_data$SalePrice)
-        rmse_test[i] <- RMSE(pred, test_data$SalePrice)
-    }
+          rmse_test[i] <- RMSE(pred, test_data$SalePrice)
+      }
 
-    rmse_df <- data.frame(
-  Fold = 1:length(folds),
+      rmse_df <- data.frame(
+    Fold = 1:length(folds),
   RMSE_Train = rmse_train,
-  RMSE_Test = rmse_test
-)
+    RMSE_Test = rmse_test
+ ) 
 
 ggplot(rmse_df, aes(x = Fold)) +
   geom_line(aes(y = RMSE_Train, color = "Conjunto de training")) +
-  geom_line(aes(y = RMSE_Test, color = "Conjunto de test")) +
-  labs(title = "Valores de RMSE en la validación cruzada",
-       x = "Fold",
+    geom_line(aes(y = RMSE_Test, color = "Conjunto de test")) +
+    labs(title = "Valores de RMSE en la validación cruzada",
+         x = "Fold",
        y = "RMSE") +
   scale_color_manual(values = c("Conjunto de training" = "blue", "Conjunto de test" = "red")) +
   theme_minimal()
 ```
-
-
-### Modelo 2 analisis de sobreajuste
-
+  
+  
+  ###   Modelo 2 analisis de sobreajuste
+    
 ```{r}
-    mse_train <- mean((prediction_2_train - train$SalePrice)^2)
-    mse_test <- mean((prediction_2 - test$SalePrice)^2)
-
+      mse_train <- mean((prediction_2_train - train$SalePrice)^2)
+      mse_test <- mean((prediction_2 - test$SalePrice)^2)
+  
     train_errors <- (prediction_2_train - train$SalePrice)^2
     test_errors <- (prediction_2 - test$SalePrice)^2
 
@@ -442,32 +442,43 @@ ggplot(rmse_df, aes(x = Fold)) +
         rmse_train[i] <- RMSE(pred_train, train_data$SalePrice)
         rmse_test[i] <- RMSE(pred, test_data$SalePrice)
     }
-
-    rmse_df <- data.frame(
+  
+      rmse_df <- data.frame(
   Fold = 1:length(folds),
-  RMSE_Train = rmse_train,
-  RMSE_Test = rmse_test
+    RMSE_Train = rmse_train,
+    RMSE_Test = rmse_test
 )
-
-ggplot(rmse_df, aes(x = Fold)) +
+  
+  ggplot(rmse_df, aes(x = Fold)) +
   geom_line(aes(y = RMSE_Train, color = "Conjunto de training")) +
   geom_line(aes(y = RMSE_Test, color = "Conjunto de test")) +
   labs(title = "Valores de RMSE en la validación cruzada",
-       x = "Fold",
-       y = "RMSE") +
-  scale_color_manual(values = c("Conjunto de trainig" = "blue", "Conjunto de test" = "red")) +
+         x = "Fold",
+         y = "RMSE") +
+    scale_color_manual(values = c("Conjunto de trainig" = "blue", "Conjunto de test" = "red")) +
   theme_minimal()
 ```
 
-En las curvas de aprendijaze que se muestran anteriormente se puede notar que tanto para test como para training no existe un comportamiento normal de la curva, por lo que se puede decir que si existe sobreajuste ambos modelos. Esto se puede deber a que la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.
-
-## 13.Discuta si puede mejorar el modelo.
-A pesar de haber implementado técnicas para evitar el sobreajuste en los modelos creados, tales como el ajuste de parámetros y el uso de validación cruzada con diferentes funciones de activación, así como el parámetro de dropout, estos aún presentan dicho problema. Lamentablemente, ninguna de estas técnicas ha logrado mejorar los modelos, por lo que no es factible mejorar ninguno de ellos.
-
-## 14. Compare la eficiencia
-El modelo 1 de RNA se tardo `r pm1$sampling.time` ms, mientras que el modelo 2 se tardó `r pm2$sampling.time` ms.
-
-### Random Forest
+ En  las curvas de aprendijaze que se muestran anteriormente se puede notar que tanto para test como para training no existe un comportamiento normal de la curva, por lo que se puede decir que si existe sobreajuste ambos modelos. Esto se puede deber a que la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.
+  
+  ## 13.Discuta si puede mejorar el modelo.
+A pe    sar de haber implementado técnicas para evitar el sobreajuste en los modelos creados, tales como el ajuste de parámetros y el uso de validación cruzada con diferentes funciones de activación, así como el parámetro de dropout, estos aún presentan dicho problema. Lamentablemente, ninguna de estas técnicas ha logrado mejorar los modelos, por lo que no es factible mejorar ninguno de ellos.
+    
+## 1    4. Compare la eficiencia
+El   modelo 1 de RNA se tardo `r pm1$sampling.time` ms, mientras que el modelo 2 se tardó `r pm2$sampling.time` ms.
+  
+##  # Random Forest
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 El modelo logró un accuracy de 0.8269 y un tiempo de procesamiento de 0.82 ms. Además, obtuvo una sensitivity de 0.8947 y una specificity de 0.9443, lo que sugiere que el modelo tiene un bajo índice de errores.
 
 ### Arboles de Decision
