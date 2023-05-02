@@ -213,21 +213,21 @@ El segundo modelo se evidencia en su curva de aprendizaje que tiene overfitting.
 
 ## 8. Tuneo de parametros
 
+### 8.1 Tuneo
 ```{r }
-grid <- expand.grid(size = c(2, 4, 6, 10),
-                    decay = c(0.01, 0.1, 0.5, 1.5, 1.25))
+# grid <- expand.grid(size = c(2, 4, 6, 10),
+#                     decay = c(0.01, 0.1, 0.5, 1.5, 1.25))
 
-modelo_tuneado <- caret::train(clasificacion ~ ., 
-                               data = train, 
-                                 method = "nnet", 
-                                 trace = F, 
-                               tuneGrid = grid, 
-                               nnet = list(droput = 0.5), 
-                               maxit = 100)
+# modelo_tuneado <- caret::train(clasificacion ~ ., 
+#                                data = train, 
+#                                  method = "nnet", 
+#                                  trace = F, 
+#                                tuneGrid = grid, 
+#                                nnet = list(droput = 0.5), 
+#                                maxit = 100)
   
-modelo_tuneado$bestTune
-summary(modelo_tuneado)
-  
+# modelo_tuneado$bestTune
+# summary(modelo_tuneado)
 ```
   
 ```{r echo=F, message=F}
@@ -258,10 +258,10 @@ param_set <- makeParamSet(
 control <- makeTuneControlGrid()
 
 #   Configurar la búsqueda de hiperparámetros
-tune_params <- makeTuneWrapper(learner, resampling, measures = list(ber), par.set = param_set, control = control)
+tune_params <- makeTuneWrapper(learner, resampling, measures = list(ber), par.set = param_set, control = control, show.info = FALSE)
 
 # Ejecutar la búsqueda de hiperparámetros
-res <- resample(tune_params, datos.task, resampling, measures = list(ber), extract = getTuneResult)
+res <- resample(tune_params, datos.task, resampling, measures = list(ber), extract = getTuneResult, show.info = FALSE, trace = FALSE)
 
 # Mostrar los resultados
 print(res)
@@ -272,7 +272,7 @@ print(best_params)
 
 ```
 
-Al utilizar crossvalidation con parameter tuning, se obtuvo que la mejor cantidad de neuronas es 10 y el mejor decay es 1.26 aproximadamente. No se muestra porque la ejecución del código es muy extensa. A pesar de que estos valores puede que mejoren un poco el accuracy, el overfitting es muy probable que se mantenga.
+Al utilizar crossvalidation con parameter tuning, se obtuvo que la mejor cantidad de neuronas es 10 y el mejor decay es 1.26 aproximadamente. A pesar de que estos valores puede que mejoren un poco el accuracy, el overfitting es muy probable que se mantenga.
 
 ### 8.2 Modelo Tuneado
 
@@ -291,7 +291,7 @@ cfm3 <- confusionMatrix(prediccion3, test$clasificacion)
 cfm3
 ```
 
-Se obtuvo un accuracy de 0.77, solo un 0.01 arriba del mejor accuracy anterior. Por lo que no se tiene una diferencia tan significativa para el modelo. Es casi seguro que el overfitting se mantuvo.
+Se obtuvo un accuracy de 0.80, un 0.04 arriba del mejor accuracy anterior. Se tiene una diferencia importante entre modelos al hacer el tuneo de parámetros, es posible que se haya mantenido el overfitting.
 
 
 ## 9. Selección de SalePrice como variable respuesta
@@ -411,8 +411,7 @@ ggplot(rmse_df, aes(x = Fold)) +
   theme_minimal()
 ```
   
-  
-  ###   Modelo 2 analisis de sobreajuste
+### Modelo 2 analisis de sobreajuste
     
 ```{r}
       mse_train <- mean((prediction_2_train - train$SalePrice)^2)
@@ -459,26 +458,17 @@ ggplot(rmse_df, aes(x = Fold)) +
   theme_minimal()
 ```
 
- En  las curvas de aprendijaze que se muestran anteriormente se puede notar que tanto para test como para training no existe un comportamiento normal de la curva, por lo que se puede decir que si existe sobreajuste ambos modelos. Esto se puede deber a que la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.
+En  las curvas de aprendijaze que se muestran anteriormente se puede notar que tanto para test como para training no existe un comportamiento normal de la curva, por lo que se puede decir que si existe sobreajuste ambos modelos. Esto se puede deber a que la red neuronal no es muy compleja y aun así se tiene un R^2 bastante alto, lo cual indica que la red neuronal puede estarse adecuando mucho a los datos.
+
+En realidad estas curvas de aprendizaje muestran que los datos no son representativos. Esto puede deberse a la baja complejidad de las redes neuronales o lo opuesto, que el modelo sea demasiado complejo para la predicción de SalePrice.
   
-  ## 13.Discuta si puede mejorar el modelo.
+## 13.Discuta si puede mejorar el modelo.
 A pe    sar de haber implementado técnicas para evitar el sobreajuste en los modelos creados, tales como el ajuste de parámetros y el uso de validación cruzada con diferentes funciones de activación, así como el parámetro de dropout, estos aún presentan dicho problema. Lamentablemente, ninguna de estas técnicas ha logrado mejorar los modelos, por lo que no es factible mejorar ninguno de ellos.
     
-## 1    4. Compare la eficiencia
-El   modelo 1 de RNA se tardo `r pm1$sampling.time` ms, mientras que el modelo 2 se tardó `r pm2$sampling.time` ms.
+## 14. Compare la eficiencia
+El modelo 1 de RNA se tardo `r pm1$sampling.time` ms, mientras que el modelo 2 se tardó `r pm2$sampling.time` ms.
   
-##  # Random Forest
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+### Random Forest
 El modelo logró un accuracy de 0.8269 y un tiempo de procesamiento de 0.82 ms. Además, obtuvo una sensitivity de 0.8947 y una specificity de 0.9443, lo que sugiere que el modelo tiene un bajo índice de errores.
 
 ### Arboles de Decision
@@ -567,3 +557,5 @@ Para el modelo actual de RNA:
   - RMSE de 0.37
 
 Basándonos en el análisis de los resultados obtenidos, podemos concluir que el modelo de SVM es el mejor para predecir el precio de venta, ya que presenta el valor más alto de R-cuadrado y un RMSE más bajo en comparación con los otros modelos evaluados. El modelo de regresión lineal múltiple también presenta un buen desempeño, aunque no tan alto como el modelo de SVM. Es importante tener en cuenta que la elección del mejor modelo depende de diferentes factores, como la complejidad del modelo y la interpretación de las variables, por lo que se recomienda considerar cuidadosamente los resultados y seleccionar el modelo que mejor se ajuste a las necesidades específicas del problema en cuestión.
+
+En general, si se tiene un conjunto de datos con pocas variables, es posible que sea mejor utilizar un modelo más simple como un árbol de decisión. SVM es un modelo muy poderoso para clasificación, en parte por los kernels, que puede ser aplicado en datos con más variables pero tiene cierto límite por la cantidad de registros que pueden ser usados. Finalmente, una red neuronal puede ser usada con más features y con una mayor cantidad de registros.
